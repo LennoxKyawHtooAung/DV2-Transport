@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "KTMB Ridership Trends by Service",
+  "data": {
+    "url": "data/ridership_ktmb_daily.csv"
+  },
+  "width": 260,
+  "height": 170,
+  "params": [
+    {
+      "name": "hover",
+      "select": {
+        "type": "point",
+        "on": "mouseover",
+        "clear": "mouseout"
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.service != 'shuttle_tebrau'"
+    },
+    {
+      "calculate": "datum.service == 'ets' ? 'ETS' : datum.service == 'intercity' ? 'Intercity' : datum.service == 'komuter' ? 'Komuter' : datum.service == 'komuter_utara' ? 'Komuter Utara' : datum.service",
+      "as": "service_label"
+    }
+  ],
+  "mark": {
+    "type": "line"
+  },
+  "encoding": {
+    "facet": {
+      "field": "service_label",
+      "type": "nominal",
+      "columns": 2,
+      "title": null
+    },
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": "Date",
+      "axis": {
+        "format": "%Y",
+        "tickCount": 4,
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "ridership",
+      "type": "quantitative",
+      "title": "Daily Ridership",
+      "axis": {
+        "labelExpr": "datum.value >= 1000 ? format(datum.value / 1000, '.0f') + 'K' : datum.value"
+      }
+    },
+    "color": {
+      "field": "service_label",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "domain": [
+          "ETS",
+          "Intercity",
+          "Komuter",
+          "Komuter Utara"
+        ],
+        "range": [
+          "#009E73",
+          "#44AA99",
+          "#666666",
+          "#117733"
+        ]
+      }
+    },
+    "opacity": {
+      "condition": {
+        "param": "hover",
+        "value": 1
+      },
+      "value": 0.65
+    },
+    "size": {
+      "condition": {
+        "param": "hover",
+        "value": 3
+      },
+      "value": 1.5
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "title": "Date"
+      },
+      {
+        "field": "service_label",
+        "type": "nominal",
+        "title": "Service"
+      },
+      {
+        "field": "ridership",
+        "type": "quantitative",
+        "title": "Ridership",
+        "format": ","
+      }
+    ]
+  },
+  "resolve": {
+    "scale": {
+      "y": "independent"
+    }
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

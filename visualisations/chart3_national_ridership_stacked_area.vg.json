@@ -1,0 +1,153 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1280,
+  "height": 420,
+  "title": "National Public Transport Ridership Over Time",
+  "data": {
+    "url": "data/ridership_headline.csv"
+  },
+  "params": [
+    {
+      "name": "service_highlight",
+      "select": {
+        "type": "point",
+        "fields": ["service_label"]
+      },
+      "bind": "legend"
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "year(toDate(datum.date))",
+      "as": "year"
+    },
+    {
+      "filter": "datum.year >= 2023"
+    },
+    {
+      "fold": [
+        "bus_rkl",
+        "bus_rkn",
+        "bus_rpn",
+        "rail_lrt_ampang",
+        "rail_mrt_kajang",
+        "rail_lrt_kj",
+        "rail_monorail",
+        "rail_mrt_pjy",
+        "rail_ets",
+        "rail_intercity",
+        "rail_komuter_utara",
+        "rail_tebrau",
+        "rail_komuter"
+      ],
+      "as": ["service", "ridership"]
+    },
+    {
+      "filter": "datum.ridership != null && datum.ridership > 0"
+    },
+    {
+      "calculate": "datum.service == 'bus_rkl' ? 'RapidKL Bus' : datum.service == 'bus_rkn' ? 'Rapid Kuantan Bus' : datum.service == 'bus_rpn' ? 'Rapid Penang Bus' : datum.service == 'rail_lrt_ampang' ? 'LRT Ampang' : datum.service == 'rail_mrt_kajang' ? 'MRT Kajang' : datum.service == 'rail_lrt_kj' ? 'LRT Kelana Jaya' : datum.service == 'rail_monorail' ? 'Monorail' : datum.service == 'rail_mrt_pjy' ? 'MRT Putrajaya' : datum.service == 'rail_ets' ? 'ETS' : datum.service == 'rail_intercity' ? 'Intercity' : datum.service == 'rail_komuter_utara' ? 'Komuter Utara' : datum.service == 'rail_tebrau' ? 'Tebrau Shuttle' : datum.service == 'rail_komuter' ? 'Komuter' : datum.service",
+      "as": "service_label"
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "interpolate": "monotone"
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "temporal",
+      "title": "Date",
+      "axis": {
+        "format": "%b %Y",
+        "labelAngle": -45,
+        "tickCount": 8
+      }
+    },
+    "y": {
+    "field": "ridership",
+    "type": "quantitative",
+    "stack": "zero",
+    "title": "Daily Ridership",
+    "axis": {
+        "tickCount": 8,
+        "labelExpr": "datum.value >= 1000000 ? format(datum.value / 1000000, '.1f') + 'M' : format(datum.value / 1000, '.0f') + 'K'"
+    }
+    },
+    "color": {
+      "field": "service_label",
+      "type": "nominal",
+      "title": "Transport Service",
+      "scale": {
+        "domain": [
+          "RapidKL Bus",
+          "Rapid Kuantan Bus",
+          "Rapid Penang Bus",
+          "LRT Ampang",
+          "MRT Kajang",
+          "LRT Kelana Jaya",
+          "Monorail",
+          "MRT Putrajaya",
+          "ETS",
+          "Intercity",
+          "Komuter Utara",
+          "Tebrau Shuttle",
+          "Komuter"
+        ],
+        "range": [
+          "#0072B2",
+          "#56B4E9",
+          "#88CCEE",
+          "#E69F00",
+          "#CC79A7",
+          "#D55E00",
+          "#999999",
+          "#AA4499",
+          "#009E73",
+          "#44AA99",
+          "#117733",
+          "#F0E442",
+          "#666666"
+        ]
+      },
+    "legend": {
+        "orient":"bottom",
+        "direction":"horizontal",
+        "columns":13,
+        "symbolSize":240,
+        "labelFontSize":11
+    }
+    },
+    "opacity": {
+      "condition": {
+        "param": "service_highlight",
+        "value": 1
+      },
+      "value": 0.2
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "title": "Date"
+      },
+      {
+        "field": "service_label",
+        "type": "nominal",
+        "title": "Service"
+      },
+      {
+        "field": "ridership",
+        "type": "quantitative",
+        "title": "Daily Ridership",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

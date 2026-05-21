@@ -1,0 +1,137 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 350,
+  "height": 300,
+  "title": "Top Districts by Population",
+  "data": {
+    "url": "data/population_district.csv"
+  },
+  "params": [
+    {
+      "name": "TopN",
+      "value": 25,
+      "bind": {
+        "input": "range",
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "name": "Show top districts: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.sex == 'both' && datum.age == 'overall' && datum.ethnicity == 'overall' && datum.date == '2024-01-01'"
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "population",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.rank <= TopN"
+    }
+  ],
+  "mark": {
+    "type": "point",
+    "filled": true,
+    "size": 90,
+    "opacity": 0.85
+  },
+  "encoding": {
+    "y": {
+      "field": "district",
+      "type": "nominal",
+      "sort": {
+        "field": "population",
+        "order": "descending"
+      },
+      "title": "District"
+    },
+    "x": {
+      "field": "population",
+      "type": "quantitative",
+      "title": "Population"
+    },
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Johor",
+          "Kedah",
+          "Kelantan",
+          "Melaka",
+          "Negeri Sembilan",
+          "Pahang",
+          "Perak",
+          "Perlis",
+          "Pulau Pinang",
+          "Sabah",
+          "Sarawak",
+          "Selangor",
+          "Terengganu",
+          "W.P. Kuala Lumpur",
+          "W.P. Labuan",
+          "W.P. Putrajaya"
+        ],
+        "range": [
+          "#1f77b4",
+          "#ff7f0e",
+          "#2ca02c",
+          "#d62728",
+          "#9467bd",
+          "#8c564b",
+          "#e377c2",
+          "#7f7f7f",
+          "#bcbd22",
+          "#17becf",
+          "#aec7e8",
+          "#e41a1c",
+          "#4daf4a",
+          "#984ea3",
+          "#ff9896",
+          "#f781bf"
+        ]
+      },
+      "legend": null
+    },
+    "tooltip": [
+      {
+        "field": "rank",
+        "type": "ordinal",
+        "title": "Rank"
+      },
+      {
+        "field": "district",
+        "type": "nominal",
+        "title": "District"
+      },
+      {
+        "field": "state",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "population",
+        "type": "quantitative",
+        "title": "Population",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

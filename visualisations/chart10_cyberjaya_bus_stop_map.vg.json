@@ -1,0 +1,111 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 850,
+  "height": 520,
+  "title": "Cyberjaya Bus Stop Locations",
+  "layer": [
+    {
+      "data": {
+        "url": "data/cyberjaya_boundary.json",
+        "format": {
+          "type": "geojson"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f3f4f6",
+        "stroke": "#9ca3af",
+        "strokeWidth": 1.2
+      }
+    },
+    {
+      "data": {
+        "url": "data/cyberview_bus_stops_cj.csv"
+      },
+      "transform": [
+        {
+          "calculate": "toNumber(split(datum.lat_long, ',')[0])",
+          "as": "latitude"
+        },
+        {
+          "calculate": "toNumber(split(datum.lat_long, ',')[1])",
+          "as": "longitude"
+        },
+        {
+          "calculate": "isValid(datum.point_of_interest) && datum.point_of_interest != '' ? 'Near POI' : 'No POI listed'",
+          "as": "poi_status"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "opacity": 0.85,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "poi_status",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Near POI", "No POI listed"],
+            "range": [140, 70]
+          },
+          "legend": {
+            "title": "POI availability"
+          }
+        },
+        "color": {
+          "field": "poi_status",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Near POI", "No POI listed"],
+            "range": ["#0072B2", "#999999"]
+          },
+          "legend": {
+            "title": "Bus stop type"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "street_name",
+            "type": "nominal",
+            "title": "Street"
+          },
+          {
+            "field": "address",
+            "type": "nominal",
+            "title": "Address"
+          },
+          {
+            "field": "point_of_interest",
+            "type": "nominal",
+            "title": "Point of Interest"
+          },
+          {
+            "field": "additional_info",
+            "type": "nominal",
+            "title": "Additional Info"
+          }
+        ]
+      }
+    }
+  ],
+  "projection": {
+    "type": "mercator",
+    "center": [101.65, 2.92],
+    "scale": 90000
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

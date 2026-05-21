@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DV2: Transport in Malaysia</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <header class="dashboard-header">
+      <h1>Malaysia Public Transport: Demand, Movement, Last-Mile Gaps</h1>
+
+      <p class="subtitle">
+        An interactive visualisation of population concentration, public transport ridership,
+        and local access infrastructure.
+      </p>
+    </header>
+
+    <!-- Section 1 -->
+    <section class="section">
+
+      <h2>Where People Gather</h2>
+
+      <p class="section-intro">
+        Before analysing transport demand, it is useful to understand where people are located.
+        This section compares Malaysian districts by population, highlighting the most populated
+        districts and their states.
+      </p>
+
+      <div class="three-column-layout">
+
+        <div class="chart-card">
+          <h3>Chart 1: Population Heatmap</h3>
+
+          <p>
+            Uses colour luminance to identify districts with higher population.
+          </p>
+
+          <div id="chart1" class="chart"></div>
+        </div>
+
+        <div class="middle-box">
+          <h3>Synthesised Insight</h3>
+
+          <p>
+            Malaysia’s population is concentrated in a limited number of districts rather than
+            being evenly spread.
+          </p>
+
+          <p>
+            The heatmap reveals where high-population districts appear across states, while
+            the dot plot makes the ranking and population gap easier to compare.
+          </p>
+
+          <hr>
+
+          <p>
+            <strong>Why this matters:</strong><br>
+            These districts may signal stronger public transport demand, setting up the ridership
+            analysis that follows.
+          </p>
+        </div>
+
+        <div class="chart-card">
+          <h3>Chart 2: Ranked District Dot Plot</h3>
+
+          <p>
+            Position on the x-axis enables clearer ranking comparison between districts.
+          </p>
+
+          <div id="chart2" class="chart"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Section 2 -->
+    <section class="section">
+
+      <h2>From Population to Movement</h2>
+
+      <p class="section-intro">
+        Population concentration does not automatically translate into transport usage.
+        Ridership trends reveal how movement changes over time and which services carry demand.
+      </p>
+
+      <div class="full-width-card">
+        <h3>Chart 3: National Ridership Stacked Area</h3>
+
+        <p>
+          The stacked area chart shows how different services contribute to total public
+          transport ridership over time.
+        </p>
+
+        <div id="chart3" class="chart"></div>
+      </div>
+
+      <div class="two-column-layout">
+
+        <div class="chart-card">
+          <h3>Chart 4: KTMB Small Multiples</h3>
+
+          <p>
+            Separate ridership trends for each KTMB service avoid overlapping lines
+            and support clearer comparison.
+          </p>
+
+          <div id="chart4" class="chart"></div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Chart 5: KTMB Calendar Heatmap</h3>
+
+          <p>
+            Daily colour intensity reveals repeated temporal patterns such as weekday peaks
+            or unusually low ridership periods.
+          </p>
+
+          <div id="chart5" class="chart"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Section 5 -->
+    <section class="section">
+
+      <h2>The Last-Mile Question</h2>
+
+      <p class="section-intro">
+        Public transport access does not end at major rail corridors. This case study looks at
+        Cyberjaya’s bus stop locations to understand how local access points are distributed.
+      </p>
+
+      <div class="full-width-card">
+        <h3>Chart 10: Cyberjaya Bus Stop Proportional Symbol Map</h3>
+
+        <p>
+          Each point represents a Cyberjaya bus stop. Larger points indicate stops with a listed
+          point of interest, while tooltips provide street, address, and nearby landmark details.
+        </p>
+
+        <div id="chart10" class="chart"></div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="js/main.js"></script>
+
+</body>
+</html>

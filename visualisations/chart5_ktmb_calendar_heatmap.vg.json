@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 540,
+  "height": 310,
+  "title": "KTMB Daily Ridership Calendar Heatmap",
+  "data": {
+    "url": "data/ridership_ktmb_daily.csv"
+  },
+  "params": [
+    {
+      "name": "ServiceSelection",
+      "value": "komuter",
+      "bind": {
+        "input": "select",
+        "options": [
+          "ets",
+          "intercity",
+          "komuter",
+          "komuter_utara",
+          "shuttle_tebrau"
+        ],
+        "labels": [
+          "ETS",
+          "Intercity",
+          "Komuter",
+          "Komuter Utara",
+          "Tebrau Shuttle"
+        ],
+        "name": "Select service: "
+      }
+    },
+    {
+      "name": "YearSelection",
+      "value": 2025,
+      "bind": {
+        "input": "select",
+        "options": [
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "labels": [
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ],
+        "name": "Year: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.service == ServiceSelection"
+    },
+    {
+      "calculate": "year(toDate(datum.date))",
+      "as": "year"
+    },
+    {
+      "filter": "datum.year == YearSelection"
+    },
+    {
+      "calculate": "datum.service == 'ets' ? 'ETS' : datum.service == 'intercity' ? 'Intercity' : datum.service == 'komuter' ? 'Komuter' : datum.service == 'komuter_utara' ? 'Komuter Utara' : datum.service == 'shuttle_tebrau' ? 'Tebrau Shuttle' : datum.service",
+      "as": "service_label"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "tooltip": true
+  },
+  "encoding": {
+    "x": {
+      "field": "date",
+      "type": "ordinal",
+      "timeUnit": "week",
+      "title": "Week of Year",
+      "axis": {
+        "labelAngle": 0,
+        "tickCount": 12
+      }
+    },
+    "y": {
+      "field": "date",
+      "type": "ordinal",
+      "timeUnit": "day",
+      "title": "Day",
+      "sort": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ]
+    },
+    "color": {
+      "field": "ridership",
+      "type": "quantitative",
+      "title": "Ridership",
+      "scale": {
+        "scheme": "tealblues"
+      },
+      "legend": {
+        "orient": "right",
+        "gradientLength": 180,
+        "gradientThickness": 14,
+        "titleFontSize": 12,
+        "labelFontSize": 11,
+        "format": ".2s"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "date",
+        "type": "temporal",
+        "title": "Date"
+      },
+      {
+        "field": "service_label",
+        "type": "nominal",
+        "title": "Service"
+      },
+      {
+        "field": "ridership",
+        "type": "quantitative",
+        "title": "Ridership",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}

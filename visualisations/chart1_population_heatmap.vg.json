@@ -1,0 +1,79 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 350,
+  "height": 300,
+  "title": "Top 25 Most Populated Districts in Malaysia",
+  "data": {
+    "url": "data/population_district.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.sex == 'both' && datum.age == 'overall' && datum.ethnicity == 'overall' && datum.date == '2024-01-01'"
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [
+        {
+          "field": "population",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "filter": "datum.rank <= 25"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "tooltip": true
+  },
+  "encoding": {
+    "y": {
+      "field": "district",
+      "type": "nominal",
+      "sort": "-x",
+      "title": "District"
+    },
+    "x": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State"
+    },
+    "color": {
+      "field": "population",
+      "type": "quantitative",
+      "title": "Population",
+      "scale": {
+        "scheme": "blues"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "state",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "district",
+        "type": "nominal",
+        "title": "District"
+      },
+      {
+        "field": "population",
+        "type": "quantitative",
+        "title": "Population",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    }
+  }
+}
