@@ -18,6 +18,18 @@ vegaEmbed("#chart5", "visualisations/chart5_ktmb_calendar_heatmap.vg.json", {
     actions: false
 }).catch(console.error);
 
+vegaEmbed(
+"#chart8",
+"visualisations/chart8_fare_time_scatter.vg.json",
+{actions:false}
+);
+
+vegaEmbed(
+"#chart9",
+"visualisations/chart9_transfer_boxplot.vg.json",
+{actions:false}
+);
+
 vegaEmbed("#chart10", "visualisations/chart10_cyberjaya_bus_stop_map.vg.json", {
     actions: false
 }).catch(console.error);
