@@ -145,3 +145,9 @@ h1 {
 .two-column-layout .chart-card {
     min-height: 520px;
 }
+
+.source-note {
+  font-size: 11px;
+  color: #666;
+  margin-top: 6px;
+}

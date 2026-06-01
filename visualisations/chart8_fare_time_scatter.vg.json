@@ -1,64 +1,163 @@
 {
-"$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-
-"width":520,
-"height":380,
-
-"title":"Journey Time vs Fare",
-
-"data":{
-"url":"data/Fare_Time_Merged.csv"
-},
-
-"mark":{
-"type":"circle",
-"opacity":0.75,
-"tooltip":true
-},
-
-"encoding":{
-
-"x":{
-"field":"travel_time",
-"type":"quantitative",
-"title":"Travel Time (minutes)"
-},
-
-"y":{
-"field":"fare",
-"type":"quantitative",
-"title":"Fare (RM)"
-},
-
-"size":{
-"field":"fare_per_minute",
-"type":"quantitative",
-"title":"Cost Efficiency"
-},
-
-"color":{
-"field":"transfer_count",
-"type":"ordinal",
-"title":"Transfers",
-"scale":{
-"scheme":"blues"
-}
-},
-
-"tooltip":[
-
-{"field":"origin"},
-
-{"field":"destination"},
-
-{"field":"travel_time"},
-
-{"field":"fare"},
-
-{"field":"transfer_count"}
-
-]
-
-}
-
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 340,
+  "title": {
+    "text": "Fare and Travel Time by RapidKL Journey",
+    "subtitle": "Station-pair fares compared with estimated travel time",
+    "anchor": "start"
+  },
+  "data": {
+    "url": "data/fare_time_route_long.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "fare_rm": "number",
+        "time_min": "number",
+        "transfer_count": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "size": 58,
+        "opacity": 0.48,
+        "stroke": "white",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "x": {
+          "field": "time_min",
+          "type": "quantitative",
+          "title": "Travel time (minutes)",
+          "scale": {
+            "domain": [0, 110]
+          }
+        },
+        "y": {
+          "field": "fare_rm",
+          "type": "quantitative",
+          "title": "Fare (RM)",
+          "scale": {
+            "domain": [0, 8]
+          },
+          "axis": {
+            "labelExpr": "'RM ' + format(datum.value, '.0f')"
+          }
+        },
+        "color": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "title": "Journey type",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ],
+            "range": [
+              "#2A9D8F",
+              "#F28E2B"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "title": null
+          }
+        },
+        "tooltip": [
+          {
+            "field": "origin",
+            "type": "nominal",
+            "title": "Origin"
+          },
+          {
+            "field": "destination",
+            "type": "nominal",
+            "title": "Destination"
+          },
+          {
+            "field": "fare_label",
+            "type": "nominal",
+            "title": "Fare"
+          },
+          {
+            "field": "time_label",
+            "type": "nominal",
+            "title": "Travel time"
+          },
+          {
+            "field": "transfer_group",
+            "type": "nominal",
+            "title": "Journey type"
+          },
+          {
+            "field": "route",
+            "type": "nominal",
+            "title": "Route"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "time_min": 19,
+            "fare_rm": 2.2,
+            "label": "Direct journeys cluster at lower fare and time"
+          },
+          {
+            "time_min": 75,
+            "fare_rm": 6.6,
+            "label": "Transfer journeys form the upper-right tail"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 6,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "x": {
+          "field": "time_min",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "fare_rm",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "grid": true,
+      "gridOpacity": 0.22
+    },
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 10
+    },
+    "title": {
+      "fontSize": 14,
+      "subtitleFontSize": 10,
+      "anchor": "start"
+    }
+  }
 }

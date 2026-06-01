@@ -1,153 +1,221 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 1280,
-  "height": 420,
-  "title": "National Public Transport Ridership Over Time",
-  "data": {
-    "url": "data/ridership_headline.csv"
+  "width": 1180,
+  "height": 390,
+  "title": {
+    "text": "National Ridership Trends by Transport Mode",
+    "subtitle": "Monthly average daily ridership grouped from service-level data",
+    "anchor": "start"
   },
-  "params": [
-    {
-      "name": "service_highlight",
-      "select": {
-        "type": "point",
-        "fields": ["service_label"]
-      },
-      "bind": "legend"
+  "data": {
+    "url": "data/ridership_headline.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "date": "date",
+        "bus_rkl": "number",
+        "bus_rkn": "number",
+        "bus_rpn": "number",
+        "rail_lrt_ampang": "number",
+        "rail_mrt_kajang": "number",
+        "rail_lrt_kj": "number",
+        "rail_monorail": "number",
+        "rail_mrt_pjy": "number",
+        "rail_ets": "number",
+        "rail_intercity": "number",
+        "rail_komuter_utara": "number",
+        "rail_tebrau": "number",
+        "rail_komuter": "number"
+      }
     }
-  ],
+  },
   "transform": [
     {
-      "calculate": "year(toDate(datum.date))",
-      "as": "year"
+      "calculate": "(isValid(datum.bus_rkl) ? datum.bus_rkl : 0) + (isValid(datum.bus_rkn) ? datum.bus_rkn : 0) + (isValid(datum.bus_rpn) ? datum.bus_rpn : 0)",
+      "as": "Bus"
     },
     {
-      "filter": "datum.year >= 2023"
+      "calculate": "(isValid(datum.rail_lrt_ampang) ? datum.rail_lrt_ampang : 0) + (isValid(datum.rail_mrt_kajang) ? datum.rail_mrt_kajang : 0) + (isValid(datum.rail_lrt_kj) ? datum.rail_lrt_kj : 0) + (isValid(datum.rail_monorail) ? datum.rail_monorail : 0) + (isValid(datum.rail_mrt_pjy) ? datum.rail_mrt_pjy : 0)",
+      "as": "Urban Rail"
+    },
+    {
+      "calculate": "(isValid(datum.rail_ets) ? datum.rail_ets : 0) + (isValid(datum.rail_intercity) ? datum.rail_intercity : 0) + (isValid(datum.rail_komuter_utara) ? datum.rail_komuter_utara : 0) + (isValid(datum.rail_tebrau) ? datum.rail_tebrau : 0) + (isValid(datum.rail_komuter) ? datum.rail_komuter : 0)",
+      "as": "KTMB / National Rail"
     },
     {
       "fold": [
-        "bus_rkl",
-        "bus_rkn",
-        "bus_rpn",
-        "rail_lrt_ampang",
-        "rail_mrt_kajang",
-        "rail_lrt_kj",
-        "rail_monorail",
-        "rail_mrt_pjy",
-        "rail_ets",
-        "rail_intercity",
-        "rail_komuter_utara",
-        "rail_tebrau",
-        "rail_komuter"
+        "Bus",
+        "Urban Rail",
+        "KTMB / National Rail"
       ],
-      "as": ["service", "ridership"]
+      "as": [
+        "transport_mode",
+        "ridership"
+      ]
     },
     {
-      "filter": "datum.ridership != null && datum.ridership > 0"
-    },
-    {
-      "calculate": "datum.service == 'bus_rkl' ? 'RapidKL Bus' : datum.service == 'bus_rkn' ? 'Rapid Kuantan Bus' : datum.service == 'bus_rpn' ? 'Rapid Penang Bus' : datum.service == 'rail_lrt_ampang' ? 'LRT Ampang' : datum.service == 'rail_mrt_kajang' ? 'MRT Kajang' : datum.service == 'rail_lrt_kj' ? 'LRT Kelana Jaya' : datum.service == 'rail_monorail' ? 'Monorail' : datum.service == 'rail_mrt_pjy' ? 'MRT Putrajaya' : datum.service == 'rail_ets' ? 'ETS' : datum.service == 'rail_intercity' ? 'Intercity' : datum.service == 'rail_komuter_utara' ? 'Komuter Utara' : datum.service == 'rail_tebrau' ? 'Tebrau Shuttle' : datum.service == 'rail_komuter' ? 'Komuter' : datum.service",
-      "as": "service_label"
+      "filter": "datum.ridership > 0"
     }
   ],
-  "mark": {
-    "type": "area",
-    "interpolate": "monotone"
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "title": "Date",
-      "axis": {
-        "format": "%b %Y",
-        "labelAngle": -45,
-        "tickCount": 8
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone",
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal",
+          "timeUnit": "yearmonth",
+          "title": "Month"
+        },
+        "y": {
+          "field": "ridership",
+          "type": "quantitative",
+          "aggregate": "mean",
+          "title": "Average daily ridership",
+          "scale": {
+            "domain": [0, 1000000]
+          },
+          "axis": {
+            "values": [0, 100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000, 1000000],
+            "labelExpr": "datum.value == 0 ? '0' : datum.value >= 1000000 ? format(datum.value/1000000, '.0f') + 'M' : format(datum.value/1000, '.0f') + 'K'"
+          }
+        },
+        "color": {
+          "field": "transport_mode",
+          "type": "nominal",
+          "title": "Transport mode",
+          "scale": {
+            "domain": [
+              "Urban Rail",
+              "Bus",
+              "KTMB / National Rail"
+            ],
+            "range": [
+              "#2B6CB0",
+              "#F28E2B",
+              "#2A9D8F"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "date",
+            "type": "temporal",
+            "timeUnit": "yearmonth",
+            "title": "Month"
+          },
+          {
+            "field": "transport_mode",
+            "type": "nominal",
+            "title": "Mode"
+          },
+          {
+            "field": "ridership",
+            "type": "quantitative",
+            "aggregate": "mean",
+            "title": "Average daily ridership",
+            "format": ",.0f"
+          }
+        ]
       }
     },
-    "y": {
-    "field": "ridership",
-    "type": "quantitative",
-    "stack": "zero",
-    "title": "Daily Ridership",
-    "axis": {
-        "tickCount": 8,
-        "labelExpr": "datum.value >= 1000000 ? format(datum.value / 1000000, '.1f') + 'M' : format(datum.value / 1000, '.0f') + 'K'"
-    }
-    },
-    "color": {
-      "field": "service_label",
-      "type": "nominal",
-      "title": "Transport Service",
-      "scale": {
-        "domain": [
-          "RapidKL Bus",
-          "Rapid Kuantan Bus",
-          "Rapid Penang Bus",
-          "LRT Ampang",
-          "MRT Kajang",
-          "LRT Kelana Jaya",
-          "Monorail",
-          "MRT Putrajaya",
-          "ETS",
-          "Intercity",
-          "Komuter Utara",
-          "Tebrau Shuttle",
-          "Komuter"
-        ],
-        "range": [
-          "#0072B2",
-          "#56B4E9",
-          "#88CCEE",
-          "#E69F00",
-          "#CC79A7",
-          "#D55E00",
-          "#999999",
-          "#AA4499",
-          "#009E73",
-          "#44AA99",
-          "#117733",
-          "#F0E442",
-          "#666666"
+    {
+      "data": {
+        "values": [
+          { "date": "2020-03-01", "ridership": 0 },
+          { "date": "2020-03-01", "ridership": 1000000 }
         ]
       },
-    "legend": {
-        "orient":"bottom",
-        "direction":"horizontal",
-        "columns":13,
-        "symbolSize":240,
-        "labelFontSize":11
-    }
-    },
-    "opacity": {
-      "condition": {
-        "param": "service_highlight",
-        "value": 1
+      "mark": {
+        "type": "line",
+        "strokeDash": [4, 4],
+        "strokeWidth": 1,
+        "color": "#666666"
       },
-      "value": 0.2
-    },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal",
-        "title": "Date"
-      },
-      {
-        "field": "service_label",
-        "type": "nominal",
-        "title": "Service"
-      },
-      {
-        "field": "ridership",
-        "type": "quantitative",
-        "title": "Daily Ridership",
-        "format": ","
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "ridership",
+          "type": "quantitative"
+        }
       }
-    ]
-  },
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "date": "2020-05-01",
+            "ridership": 760000,
+            "label": "2020-21 shock sharply reduced movement"
+          },
+          {
+            "date": "2023-08-01",
+            "ridership": 910000,
+            "label": "Urban rail leads the recovery after 2023"
+          },
+          {
+            "date": "2022-04-01",
+            "ridership": 250000,
+            "label": "Bus records appear from 2022 onward"
+          },
+          {
+            "date": "2024-03-01",
+            "ridership": 140000,
+            "label": "KTMB remains much lower than urban rail"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "x": {
+          "field": "date",
+          "type": "temporal"
+        },
+        "y": {
+          "field": "ridership",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "grid": true,
+      "gridOpacity": 0.22
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12,
+      "orient": "bottom"
+    },
+    "title": {
+      "fontSize": 16,
+      "subtitleFontSize": 11,
+      "anchor": "start"
     }
   }
 }

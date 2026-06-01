@@ -27,19 +27,14 @@
 
       <h2>Where People Gather</h2>
 
-      <p class="section-intro">
-        Before analysing transport demand, it is useful to understand where people are located.
-        This section compares Malaysian districts by population, highlighting the most populated
-        districts and their states.
-      </p>
-
       <div class="three-column-layout">
 
         <div class="chart-card">
-          <h3>Chart 1: Population Heatmap</h3>
+          <h3>Chart 1: Population by State</h3>
 
           <p>
-            Uses colour luminance to identify districts with higher population.
+            Aggregates district populations to show which states contain the largest
+            population concentration.
           </p>
 
           <div id="chart1" class="chart"></div>
@@ -49,29 +44,32 @@
           <h3>Synthesised Insight</h3>
 
           <p>
-            Malaysia’s population is concentrated in a limited number of districts rather than
-            being evenly spread.
+            Malaysia’s population is concentrated in a small number of states and major
+            districts rather than being evenly distributed.
           </p>
 
           <p>
-            The heatmap reveals where high-population districts appear across states, while
-            the dot plot makes the ranking and population gap easier to compare.
+            The state-level bar chart provides the broad demand context, while the
+            ranked district plot shows which local districts contribute most strongly to
+            population concentration.
           </p>
 
           <hr>
 
           <p>
             <strong>Why this matters:</strong><br>
-            These districts may signal stronger public transport demand, setting up the ridership
-            analysis that follows.
+            Concentrated population areas are more likely to create strong public
+            transport demand, especially around dense urban corridors such as
+            Selangor, Kuala Lumpur, and Putrajaya.
           </p>
         </div>
 
         <div class="chart-card">
-          <h3>Chart 2: Ranked District Dot Plot</h3>
+          <h3>Chart 2: District Population Rank-Size Plot</h3>
 
           <p>
-            Position on the x-axis enables clearer ranking comparison between districts.
+            Ranking districts by population reveals how sharply population concentration
+            drops after the largest urban districts.
           </p>
 
           <div id="chart2" class="chart"></div>
@@ -92,11 +90,10 @@
       </p>
 
       <div class="full-width-card">
-        <h3>Chart 3: National Ridership Stacked Area</h3>
+        <h3>Chart 3: National Ridership Trends by Transport Mode</h3>
 
         <p>
-          The stacked area chart shows how different services contribute to total public
-          transport ridership over time.
+          Daily ridership is grouped into broad transport modes to compare national movement trends more clearly.
         </p>
 
         <div id="chart3" class="chart"></div>
@@ -105,22 +102,21 @@
       <div class="two-column-layout">
 
         <div class="chart-card">
-          <h3>Chart 4: KTMB Small Multiples</h3>
+          <h3>Chart 4: KTMB Ridership Distribution by Service</h3>
 
           <p>
-            Separate ridership trends for each KTMB service avoid overlapping lines
-            and support clearer comparison.
+            Boxplots compare typical daily ridership and variability across KTMB services without repeating similar time-series panels.
           </p>
 
           <div id="chart4" class="chart"></div>
         </div>
 
         <div class="chart-card">
-          <h3>Chart 5: KTMB Calendar Heatmap</h3>
+          <h3>Chart 5: KTMB Monthly Ridership Pattern</h3>
 
           <p>
-            Daily colour intensity reveals repeated temporal patterns such as weekday peaks
-            or unusually low ridership periods.
+            Monthly ridership is normalised against each service's yearly average 
+            to reveal seasonal demand patterns across KTMB services.
           </p>
 
           <div id="chart5" class="chart"></div>
@@ -145,11 +141,10 @@
 
           <div class="chart-card">
 
-              <h3>Chart 8: Fare-Time Bubble Scatterplot</h3>
+              <h3>Chart 8: Fare and Travel Time by RapidKL Journey</h3>
 
               <p>
-                Each point represents a journey. Longer and more expensive trips become
-                easier to identify, while colour reveals transfer burden.
+                Station-pair fares are compared with estimated travel time, with colour separating direct and transfer journeys.
               </p>
 
               <div id="chart8" class="chart"></div>
@@ -159,11 +154,10 @@
 
           <div class="chart-card">
 
-              <h3>Chart 9: Transfer Penalty Boxplot</h3>
+              <h3>Chart 9: Transfer Penalty on Travel Time</h3>
 
               <p>
-                Distribution comparisons reveal whether journeys with more transfers
-                generally involve higher travel time or fare burden.
+                Median and interquartile ranges show how transfers increase typical travel time and journey variability.
               </p>
 
               <div id="chart9" class="chart"></div>
@@ -183,16 +177,18 @@
         Public transport access does not end at major rail corridors. This case study looks at
         Cyberjaya’s bus stop locations to understand how local access points are distributed.
       </p>
-
       <div class="full-width-card">
-        <h3>Chart 10: Cyberjaya Bus Stop Proportional Symbol Map</h3>
+        <h3>Chart 10: Cyberjaya Bus Stop Locations and POI Access</h3>
 
         <p>
-          Each point represents a Cyberjaya bus stop. Larger points indicate stops with a listed
-          point of interest, while tooltips provide street, address, and nearby landmark details.
+          Bus stop coordinates are plotted over a wider Cyberjaya road basemap. Colour separates stops with a listed nearby point of interest from stops without a listed POI.
         </p>
 
         <div id="chart10" class="chart"></div>
+
+        <p class="source-note">
+          Basemap roads: © OpenStreetMap contributors, extracted using Overpass Turbo.
+        </p>
       </div>
 
     </section>

@@ -1,26 +1,66 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 850,
-  "height": 520,
-  "title": "Cyberjaya Bus Stop Locations",
+  "width": 1000,
+  "height": 620,
+  "title": {
+    "text": "Cyberjaya Bus Stop Locations and POI Access",
+    "subtitle": "Bus stops plotted over a wider OpenStreetMap road basemap",
+    "anchor": "start"
+  },
+  "projection": {
+    "type": "mercator",
+    "center": [101.643, 2.932],
+    "scale": 600000
+  },
   "layer": [
     {
       "data": {
-        "url": "data/cyberjaya_boundary.json",
+        "url": "data/cyberjaya_roads_wider.geojson",
         "format": {
-          "type": "geojson"
+          "type": "json",
+          "property": "features"
         }
       },
+      "transform": [
+        {
+          "filter": "datum.properties.highway == 'motorway' || datum.properties.highway == 'trunk' || datum.properties.highway == 'primary' || datum.properties.highway == 'secondary' || datum.properties.highway == 'tertiary' || datum.properties.highway == 'motorway_link' || datum.properties.highway == 'trunk_link' || datum.properties.highway == 'primary_link' || datum.properties.highway == 'secondary_link' || datum.properties.highway == 'tertiary_link'"
+        }
+      ],
       "mark": {
         "type": "geoshape",
-        "fill": "#f3f4f6",
-        "stroke": "#9ca3af",
-        "strokeWidth": 1.2
+        "filled": false,
+        "stroke": "#A4AFB8",
+        "strokeWidth": 1.25,
+        "opacity": 0.8
       }
     },
     {
       "data": {
-        "url": "data/cyberview_bus_stops_cj.csv"
+        "url": "data/cyberjaya_roads_wider.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.properties.highway == 'residential' || datum.properties.highway == 'unclassified' || datum.properties.highway == 'service' || datum.properties.highway == 'living_street'"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "filled": false,
+        "stroke": "#E1E7EC",
+        "strokeWidth": 0.6,
+        "opacity": 0.85
+      }
+    },
+    {
+      "data": {
+        "url": "data/cyberview_bus_stops_cj.csv",
+        "format": {
+          "type": "csv"
+        }
       },
       "transform": [
         {
@@ -32,15 +72,16 @@
           "as": "longitude"
         },
         {
-          "calculate": "isValid(datum.point_of_interest) && datum.point_of_interest != '' ? 'Near POI' : 'No POI listed'",
+          "calculate": "isValid(datum.point_of_interest) && datum.point_of_interest != '' && datum.point_of_interest != 'NA' ? 'Has listed POI' : 'No listed POI'",
           "as": "poi_status"
         }
       ],
       "mark": {
         "type": "circle",
-        "opacity": 0.85,
+        "size": 170,
+        "opacity": 0.95,
         "stroke": "white",
-        "strokeWidth": 1
+        "strokeWidth": 1.6
       },
       "encoding": {
         "longitude": {
@@ -51,26 +92,23 @@
           "field": "latitude",
           "type": "quantitative"
         },
-        "size": {
-          "field": "poi_status",
-          "type": "nominal",
-          "scale": {
-            "domain": ["Near POI", "No POI listed"],
-            "range": [140, 70]
-          },
-          "legend": {
-            "title": "POI availability"
-          }
-        },
         "color": {
           "field": "poi_status",
           "type": "nominal",
+          "title": "POI status",
           "scale": {
-            "domain": ["Near POI", "No POI listed"],
-            "range": ["#0072B2", "#999999"]
+            "domain": [
+              "Has listed POI",
+              "No listed POI"
+            ],
+            "range": [
+              "#F28E2B",
+              "#2A9D8F"
+            ]
           },
           "legend": {
-            "title": "Bus stop type"
+            "orient": "bottom",
+            "title": null
           }
         },
         "tooltip": [
@@ -85,6 +123,11 @@
             "title": "Address"
           },
           {
+            "field": "poi_status",
+            "type": "nominal",
+            "title": "POI status"
+          },
+          {
             "field": "point_of_interest",
             "type": "nominal",
             "title": "Point of Interest"
@@ -96,16 +139,103 @@
           }
         ]
       }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 101.656,
+            "latitude": 2.928,
+            "label": "Central corridor has the densest stop coverage"
+          },
+          {
+            "longitude": 101.624,
+            "latitude": 2.958,
+            "label": "Northern stops form a smaller edge cluster"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#222222",
+        "dx": 8,
+        "dy": -6
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 101.648,
+            "latitude": 2.931,
+            "place": "Cyberjaya"
+          },
+          {
+            "longitude": 101.672,
+            "latitude": 2.948,
+            "place": "Putrajaya edge"
+          },
+          {
+            "longitude": 101.617,
+            "latitude": 2.946,
+            "place": "Western edge"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#6B7280",
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "place",
+          "type": "nominal"
+        }
+      }
     }
   ],
-  "projection": {
-    "type": "mercator",
-    "center": [101.65, 2.92],
-    "scale": 90000
-  },
   "config": {
     "view": {
       "stroke": "transparent"
+    },
+    "legend": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "title": {
+      "fontSize": 16,
+      "subtitleFontSize": 11,
+      "anchor": "start"
     }
   }
 }

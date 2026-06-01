@@ -1,67 +1,324 @@
 {
-"$schema":"https://vega.github.io/schema/vega-lite/v5.json",
-
-"width":500,
-"height":360,
-
-"title":"Transfer Count vs Travel Time",
-
-"data":{
-"url":"data/Fare_Time_Merged.csv"
-},
-
-"mark":"boxplot",
-
-"encoding":{
-
-"x":{
-
-"field":"transfer_count",
-
-"type":"ordinal",
-
-"title":"Transfers"
-
-},
-
-"y":{
-
-"field":"travel_time",
-
-"type":"quantitative",
-
-"title":"Travel Time (minutes)"
-
-},
-
-"color":{
-
-"field":"same_line",
-
-"type":"nominal",
-
-"scale":{
-
-"range":[
-"#0072B2",
-"#D55E00"
-]
-
-},
-
-"title":"Same line?"
-},
-
-"tooltip":[
-
-{"field":"origin"},
-
-{"field":"destination"},
-
-{"field":"travel_time"}
-
-]
-
-}
-
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 340,
+  "title": {
+    "text": "Transfer Penalty on Travel Time",
+    "subtitle": "Median and interquartile range of travel time by journey type",
+    "anchor": "start"
+  },
+  "data": {
+    "url": "data/fare_time_route_long.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "fare_rm": "number",
+        "time_min": "number",
+        "transfer_count": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "aggregate": [
+        {
+          "op": "min",
+          "field": "time_min",
+          "as": "min_time"
+        },
+        {
+          "op": "q1",
+          "field": "time_min",
+          "as": "q1_time"
+        },
+        {
+          "op": "median",
+          "field": "time_min",
+          "as": "median_time"
+        },
+        {
+          "op": "q3",
+          "field": "time_min",
+          "as": "q3_time"
+        },
+        {
+          "op": "max",
+          "field": "time_min",
+          "as": "max_time"
+        },
+        {
+          "op": "count",
+          "field": "time_min",
+          "as": "journey_count"
+        }
+      ],
+      "groupby": [
+        "transfer_group"
+      ]
+    },
+    {
+      "calculate": "format(datum.median_time, '.0f') + ' min'",
+      "as": "median_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2,
+        "opacity": 0.28
+      },
+      "encoding": {
+        "y": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "title": "Journey type",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ]
+          }
+        },
+        "x": {
+          "field": "min_time",
+          "type": "quantitative",
+          "title": "Travel time (minutes)",
+          "scale": {
+            "domain": [0, 110]
+          }
+        },
+        "x2": {
+          "field": "max_time"
+        },
+        "color": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ],
+            "range": [
+              "#2A9D8F",
+              "#F28E2B"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "transfer_group",
+            "type": "nominal",
+            "title": "Journey type"
+          },
+          {
+            "field": "journey_count",
+            "type": "quantitative",
+            "title": "Journey pairs",
+            "format": ",.0f"
+          },
+          {
+            "field": "min_time",
+            "type": "quantitative",
+            "title": "Minimum time",
+            "format": ".0f"
+          },
+          {
+            "field": "q1_time",
+            "type": "quantitative",
+            "title": "Q1 time",
+            "format": ".0f"
+          },
+          {
+            "field": "median_time",
+            "type": "quantitative",
+            "title": "Median time",
+            "format": ".0f"
+          },
+          {
+            "field": "q3_time",
+            "type": "quantitative",
+            "title": "Q3 time",
+            "format": ".0f"
+          },
+          {
+            "field": "max_time",
+            "type": "quantitative",
+            "title": "Maximum time",
+            "format": ".0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 24,
+        "opacity": 0.82
+      },
+      "encoding": {
+        "y": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ]
+          }
+        },
+        "x": {
+          "field": "q1_time",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "q3_time"
+        },
+        "color": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ],
+            "range": [
+              "#2A9D8F",
+              "#F28E2B"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 135,
+        "stroke": "white",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "y": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ]
+          }
+        },
+        "x": {
+          "field": "median_time",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ],
+            "range": [
+              "#2A9D8F",
+              "#F28E2B"
+            ]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 10,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "y": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ]
+          }
+        },
+        "x": {
+          "field": "median_time",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "median_label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "transfer_group": "1+ transfer",
+            "time_min": 72,
+            "label": "Transfers shift journeys toward longer travel times"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 6,
+        "dy": -12,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "y": {
+          "field": "transfer_group",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Direct journey",
+              "1+ transfer"
+            ]
+          }
+        },
+        "x": {
+          "field": "time_min",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "grid": true,
+      "gridOpacity": 0.2
+    },
+    "title": {
+      "fontSize": 14,
+      "subtitleFontSize": 10,
+      "anchor": "start"
+    }
+  }
 }

@@ -1,62 +1,36 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 540,
-  "height": 310,
-  "title": "KTMB Daily Ridership Calendar Heatmap",
+  "width": 430,
+  "height": 285,
+  "title": {
+    "text": "KTMB Monthly Ridership Pattern",
+    "subtitle": "Monthly average compared with each service's yearly average",
+    "anchor": "start"
+  },
   "data": {
-    "url": "data/ridership_ktmb_daily.csv"
+    "url": "data/ridership_ktmb_daily.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "date": "date",
+        "ridership": "number"
+      }
+    }
   },
   "params": [
-    {
-      "name": "ServiceSelection",
-      "value": "komuter",
-      "bind": {
-        "input": "select",
-        "options": [
-          "ets",
-          "intercity",
-          "komuter",
-          "komuter_utara",
-          "shuttle_tebrau"
-        ],
-        "labels": [
-          "ETS",
-          "Intercity",
-          "Komuter",
-          "Komuter Utara",
-          "Tebrau Shuttle"
-        ],
-        "name": "Select service: "
-      }
-    },
     {
       "name": "YearSelection",
       "value": 2025,
       "bind": {
         "input": "select",
-        "options": [
-          2021,
-          2022,
-          2023,
-          2024,
-          2025,
-          2026
-        ],
-        "labels": [
-          "2021",
-          "2022",
-          "2023",
-          "2024",
-          "2025",
-          "2026"
-        ],
+        "options": [2022, 2023, 2024, 2025, 2026],
         "name": "Year: "
       }
     }
   ],
   "transform": [
     {
-      "filter": "datum.service == ServiceSelection"
+      "filter": "datum.ridership != null && datum.ridership > 0"
     },
     {
       "calculate": "year(toDate(datum.date))",
@@ -66,78 +40,373 @@
       "filter": "datum.year == YearSelection"
     },
     {
-      "calculate": "datum.service == 'ets' ? 'ETS' : datum.service == 'intercity' ? 'Intercity' : datum.service == 'komuter' ? 'Komuter' : datum.service == 'komuter_utara' ? 'Komuter Utara' : datum.service == 'shuttle_tebrau' ? 'Tebrau Shuttle' : datum.service",
-      "as": "service_label"
-    }
-  ],
-  "mark": {
-    "type": "rect",
-    "tooltip": true
-  },
-  "encoding": {
-    "x": {
-      "field": "date",
-      "type": "ordinal",
-      "timeUnit": "week",
-      "title": "Week of Year",
-      "axis": {
-        "labelAngle": 0,
-        "tickCount": 12
-      }
+      "calculate": "month(toDate(datum.date)) + 1",
+      "as": "month_num"
     },
-    "y": {
-      "field": "date",
-      "type": "ordinal",
-      "timeUnit": "day",
-      "title": "Day",
-      "sort": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
+    {
+      "calculate": "timeFormat(toDate(datum.date), '%b')",
+      "as": "month_label"
+    },
+    {
+      "calculate": "datum.service == 'komuter' ? 'Komuter' : datum.service == 'komuter_utara' ? 'Komuter Utara' : datum.service == 'ets' ? 'ETS' : datum.service == 'shuttle_tebrau' ? 'Shuttle Tebrau' : datum.service == 'intercity' ? 'Intercity' : datum.service",
+      "as": "service_label"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "mean",
+          "field": "ridership",
+          "as": "monthly_avg_ridership"
+        },
+        {
+          "op": "count",
+          "field": "ridership",
+          "as": "recorded_days"
+        }
+      ],
+      "groupby": [
+        "service_label",
+        "month_num",
+        "month_label"
       ]
     },
-    "color": {
-      "field": "ridership",
-      "type": "quantitative",
-      "title": "Ridership",
-      "scale": {
-        "scheme": "tealblues"
+    {
+      "joinaggregate": [
+        {
+          "op": "mean",
+          "field": "monthly_avg_ridership",
+          "as": "service_year_avg"
+        }
+      ],
+      "groupby": [
+        "service_label"
+      ]
+    },
+    {
+      "calculate": "((datum.monthly_avg_ridership / datum.service_year_avg) - 1) * 100",
+      "as": "pct_from_service_avg"
+    },
+    {
+      "calculate": "datum.pct_from_service_avg > 0 ? '+' + format(datum.pct_from_service_avg, '.0f') + '%' : format(datum.pct_from_service_avg, '.0f') + '%'",
+      "as": "pct_label"
+    },
+    {
+      "calculate": "format(datum.monthly_avg_ridership / 1000, '.1f') + 'K'",
+      "as": "monthly_avg_label"
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "service_peak_rank"
+        }
+      ],
+      "groupby": [
+        "service_label"
+      ],
+      "sort": [
+        {
+          "field": "pct_from_service_avg",
+          "order": "descending"
+        }
+      ]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 1
       },
-      "legend": {
-        "orient": "right",
-        "gradientLength": 180,
-        "gradientThickness": 14,
-        "titleFontSize": 12,
-        "labelFontSize": 11,
-        "format": ".2s"
+      "encoding": {
+        "x": {
+          "field": "month_label",
+          "type": "ordinal",
+          "title": "Month",
+          "scale": {
+            "domain": [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          },
+          "axis": {
+            "labelAngle": 0,
+            "labelFontSize": 10
+          }
+        },
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "title": "KTMB service",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          },
+          "axis": {
+            "labelFontSize": 10,
+            "labelLimit": 95
+          }
+        },
+        "color": {
+          "field": "pct_from_service_avg",
+          "type": "quantitative",
+          "title": "Compared with yearly average",
+          "scale": {
+            "domain": [-30, 0, 30],
+            "range": [
+              "#E6F4F1",
+              "#A9DCD5",
+              "#0F4C45"
+            ],
+            "clamp": true
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 220,
+            "values": [-30, 0, 30],
+            "labelExpr": "datum.value > 0 ? '+' + format(datum.value, '.0f') + '%' : format(datum.value, '.0f') + '%'"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "service_label",
+            "type": "nominal",
+            "title": "Service"
+          },
+          {
+            "field": "month_label",
+            "type": "ordinal",
+            "title": "Month"
+          },
+          {
+            "field": "monthly_avg_label",
+            "type": "nominal",
+            "title": "Monthly avg daily ridership"
+          },
+          {
+            "field": "service_year_avg",
+            "type": "quantitative",
+            "title": "Service yearly avg",
+            "format": ",.0f"
+          },
+          {
+            "field": "pct_label",
+            "type": "nominal",
+            "title": "Difference from avg"
+          },
+          {
+            "field": "recorded_days",
+            "type": "quantitative",
+            "title": "Recorded days",
+            "format": ","
+          }
+        ]
       }
     },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal",
-        "title": "Date"
+    {
+      "transform": [
+        {
+          "filter": "datum.service_peak_rank == 1 && datum.pct_from_service_avg > 0"
+        }
+      ],
+      "mark": {
+        "type": "rect",
+        "fillOpacity": 0,
+        "stroke": "#0F4C45",
+        "strokeWidth": 2.5
       },
-      {
-        "field": "service_label",
-        "type": "nominal",
-        "title": "Service"
-      },
-      {
-        "field": "ridership",
-        "type": "quantitative",
-        "title": "Ridership",
-        "format": ","
+      "encoding": {
+        "x": {
+          "field": "month_label",
+          "type": "ordinal",
+          "scale": {
+            "domain": [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        },
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "service_label",
+            "type": "nominal",
+            "title": "Service"
+          },
+          {
+            "field": "month_label",
+            "type": "ordinal",
+            "title": "Month"
+          },
+          {
+            "field": "monthly_avg_label",
+            "type": "nominal",
+            "title": "Monthly avg daily ridership"
+          },
+          {
+            "field": "service_year_avg",
+            "type": "quantitative",
+            "title": "Service yearly avg",
+            "format": ",.0f"
+          },
+          {
+            "field": "pct_label",
+            "type": "nominal",
+            "title": "Difference from avg"
+          },
+          {
+            "field": "recorded_days",
+            "type": "quantitative",
+            "title": "Recorded days",
+            "format": ","
+          }
+        ]
       }
-    ]
-  },
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.service_peak_rank == 1 && datum.pct_from_service_avg > 0"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 8,
+        "fontWeight": "bold",
+        "color": "white",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "x": {
+          "field": "month_label",
+          "type": "ordinal",
+          "scale": {
+            "domain": [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
+          }
+        },
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          }
+        },
+        "text": {
+          "field": "pct_label",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "service_label",
+            "type": "nominal",
+            "title": "Service"
+          },
+          {
+            "field": "month_label",
+            "type": "ordinal",
+            "title": "Month"
+          },
+          {
+            "field": "monthly_avg_label",
+            "type": "nominal",
+            "title": "Monthly avg daily ridership"
+          },
+          {
+            "field": "service_year_avg",
+            "type": "quantitative",
+            "title": "Service yearly avg",
+            "format": ",.0f"
+          },
+          {
+            "field": "pct_label",
+            "type": "nominal",
+            "title": "Difference from avg"
+          },
+          {
+            "field": "recorded_days",
+            "type": "quantitative",
+            "title": "Recorded days",
+            "format": ","
+          }
+        ]
+      }
+    }
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "grid": false
+    },
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 10
+    },
+    "title": {
+      "fontSize": 14,
+      "subtitleFontSize": 10,
+      "anchor": "start"
     }
   }
 }

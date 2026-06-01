@@ -1,118 +1,315 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "KTMB Ridership Trends by Service",
-  "data": {
-    "url": "data/ridership_ktmb_daily.csv"
+  "width": 520,
+  "height": 330,
+  "title": {
+    "text": "KTMB Ridership Spread by Service",
+    "subtitle": "Median and interquartile range of daily ridership",
+    "anchor": "start"
   },
-  "width": 260,
-  "height": 170,
-  "params": [
-    {
-      "name": "hover",
-      "select": {
-        "type": "point",
-        "on": "mouseover",
-        "clear": "mouseout"
+  "data": {
+    "url": "data/ridership_ktmb_daily.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "date": "date",
+        "ridership": "number"
       }
     }
-  ],
+  },
   "transform": [
     {
-      "filter": "datum.service != 'shuttle_tebrau'"
+      "filter": "datum.ridership != null && datum.ridership > 0"
     },
     {
-      "calculate": "datum.service == 'ets' ? 'ETS' : datum.service == 'intercity' ? 'Intercity' : datum.service == 'komuter' ? 'Komuter' : datum.service == 'komuter_utara' ? 'Komuter Utara' : datum.service",
+      "calculate": "datum.service == 'komuter' ? 'Komuter' : datum.service == 'komuter_utara' ? 'Komuter Utara' : datum.service == 'ets' ? 'ETS' : datum.service == 'shuttle_tebrau' ? 'Shuttle Tebrau' : datum.service == 'intercity' ? 'Intercity' : datum.service",
       "as": "service_label"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "min",
+          "field": "ridership",
+          "as": "min_ridership"
+        },
+        {
+          "op": "q1",
+          "field": "ridership",
+          "as": "q1_ridership"
+        },
+        {
+          "op": "median",
+          "field": "ridership",
+          "as": "median_ridership"
+        },
+        {
+          "op": "q3",
+          "field": "ridership",
+          "as": "q3_ridership"
+        },
+        {
+          "op": "max",
+          "field": "ridership",
+          "as": "max_ridership"
+        }
+      ],
+      "groupby": ["service_label"]
+    },
+    {
+      "calculate": "format(datum.median_ridership / 1000, '.1f') + 'K'",
+      "as": "median_label"
     }
   ],
-  "mark": {
-    "type": "line"
-  },
-  "encoding": {
-    "facet": {
-      "field": "service_label",
-      "type": "nominal",
-      "columns": 2,
-      "title": null
-    },
-    "x": {
-      "field": "date",
-      "type": "temporal",
-      "title": "Date",
-      "axis": {
-        "format": "%Y",
-        "tickCount": 4,
-        "labelAngle": 0
-      }
-    },
-    "y": {
-      "field": "ridership",
-      "type": "quantitative",
-      "title": "Daily Ridership",
-      "axis": {
-        "labelExpr": "datum.value >= 1000 ? format(datum.value / 1000, '.0f') + 'K' : datum.value"
-      }
-    },
-    "color": {
-      "field": "service_label",
-      "type": "nominal",
-      "legend": null,
-      "scale": {
-        "domain": [
-          "ETS",
-          "Intercity",
-          "Komuter",
-          "Komuter Utara"
-        ],
-        "range": [
-          "#009E73",
-          "#44AA99",
-          "#666666",
-          "#117733"
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2,
+        "opacity": 0.22,
+        "color": "#2A9D8F"
+      },
+      "encoding": {
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "title": "KTMB service",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          },
+          "axis": {
+            "labelFontSize": 11
+          }
+        },
+        "x": {
+          "field": "min_ridership",
+          "type": "quantitative",
+          "title": "Daily ridership",
+          "scale": {
+            "domain": [0, 80000]
+          },
+          "axis": {
+            "values": [0, 20000, 40000, 60000, 80000],
+            "labelExpr": "datum.value == 0 ? '0' : format(datum.value/1000, '.0f') + 'K'"
+          }
+        },
+        "x2": {
+          "field": "max_ridership"
+        },
+        "tooltip": [
+          {
+            "field": "service_label",
+            "type": "nominal",
+            "title": "Service"
+          },
+          {
+            "field": "min_ridership",
+            "type": "quantitative",
+            "title": "Minimum",
+            "format": ",.0f"
+          },
+          {
+            "field": "q1_ridership",
+            "type": "quantitative",
+            "title": "Q1",
+            "format": ",.0f"
+          },
+          {
+            "field": "median_ridership",
+            "type": "quantitative",
+            "title": "Median",
+            "format": ",.0f"
+          },
+          {
+            "field": "q3_ridership",
+            "type": "quantitative",
+            "title": "Q3",
+            "format": ",.0f"
+          },
+          {
+            "field": "max_ridership",
+            "type": "quantitative",
+            "title": "Maximum",
+            "format": ",.0f"
+          }
         ]
       }
     },
-    "opacity": {
-      "condition": {
-        "param": "hover",
-        "value": 1
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 20,
+        "opacity": 0.82,
+        "color": "#2A9D8F"
       },
-      "value": 0.65
-    },
-    "size": {
-      "condition": {
-        "param": "hover",
-        "value": 3
-      },
-      "value": 1.5
-    },
-    "tooltip": [
-      {
-        "field": "date",
-        "type": "temporal",
-        "title": "Date"
-      },
-      {
-        "field": "service_label",
-        "type": "nominal",
-        "title": "Service"
-      },
-      {
-        "field": "ridership",
-        "type": "quantitative",
-        "title": "Ridership",
-        "format": ","
+      "encoding": {
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          }
+        },
+        "x": {
+          "field": "q1_ridership",
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "q3_ridership"
+        }
       }
-    ]
-  },
-  "resolve": {
-    "scale": {
-      "y": "independent"
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 140,
+        "color": "#0F4C45",
+        "stroke": "white",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          }
+        },
+        "x": {
+          "field": "median_ridership",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "service_label",
+            "type": "nominal",
+            "title": "Service"
+          },
+          {
+            "field": "median_ridership",
+            "type": "quantitative",
+            "title": "Median daily ridership",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 10,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "y": {
+          "field": "service_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          }
+        },
+        "x": {
+          "field": "median_ridership",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "median_label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": 47000,
+            "y": "Komuter",
+            "label": "Highest median + widest spread"
+          },
+          {
+            "x": 18000,
+            "y": "Shuttle Tebrau",
+            "label": "Narrower spread, steadier usage"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "dx": 6,
+        "dy": -12,
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Komuter",
+              "Komuter Utara",
+              "ETS",
+              "Shuttle Tebrau",
+              "Intercity"
+            ]
+          }
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
     }
-  },
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "grid": true,
+      "gridOpacity": 0.18
+    },
+    "title": {
+      "fontSize": 14,
+      "subtitleFontSize": 10,
+      "anchor": "start"
     }
   }
 }

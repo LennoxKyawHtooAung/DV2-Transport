@@ -2,26 +2,25 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 350,
   "height": 300,
-  "title": "Top Districts by Population",
+  "title": {
+    "text": "District Population Rank-Size Plot",
+    "subtitle": "Top 25 Malaysian districts by 2024 population",
+    "anchor": "start"
+  },
   "data": {
     "url": "data/population_district.csv"
   },
-  "params": [
-    {
-      "name": "TopN",
-      "value": 25,
-      "bind": {
-        "input": "range",
-        "min": 10,
-        "max": 60,
-        "step": 5,
-        "name": "Show top districts: "
-      }
-    }
-  ],
   "transform": [
     {
       "filter": "datum.sex == 'both' && datum.age == 'overall' && datum.ethnicity == 'overall' && datum.date == '2024-01-01'"
+    },
+    {
+      "calculate": "toNumber(datum.population)",
+      "as": "population_num"
+    },
+    {
+      "calculate": "datum.population_num / 1000",
+      "as": "population_million"
     },
     {
       "window": [
@@ -32,106 +31,231 @@
       ],
       "sort": [
         {
-          "field": "population",
+          "field": "population_num",
           "order": "descending"
         }
       ]
     },
     {
-      "filter": "datum.rank <= TopN"
+      "filter": "datum.rank <= 25"
+    },
+    {
+      "calculate": "datum.state == 'Selangor' || datum.state == 'W.P. Kuala Lumpur' || datum.state == 'W.P. Putrajaya' ? 'Klang Valley corridor' : 'Other districts'",
+      "as": "district_group"
     }
   ],
-  "mark": {
-    "type": "point",
-    "filled": true,
-    "size": 90,
-    "opacity": 0.85
-  },
-  "encoding": {
-    "y": {
-      "field": "district",
-      "type": "nominal",
-      "sort": {
-        "field": "population",
-        "order": "descending"
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 2,
+        "opacity": 0.35,
+        "color": "#A8B8C8"
       },
-      "title": "District"
+      "encoding": {
+        "x": {
+          "field": "rank",
+          "type": "quantitative",
+          "title": "Population rank",
+          "scale": {
+            "domain": [1, 25]
+          },
+          "axis": {
+            "tickMinStep": 1
+          }
+        },
+        "y": {
+          "field": "population_million",
+          "type": "quantitative",
+          "title": "Population (millions)",
+          "scale": {
+            "domain": [0, 2.6]
+          }
+        },
+        "order": {
+          "field": "rank",
+          "type": "quantitative"
+        }
+      }
     },
-    "x": {
-      "field": "population",
-      "type": "quantitative",
-      "title": "Population"
-    },
-    "color": {
-      "field": "state",
-      "type": "nominal",
-      "scale": {
-        "domain": [
-          "Johor",
-          "Kedah",
-          "Kelantan",
-          "Melaka",
-          "Negeri Sembilan",
-          "Pahang",
-          "Perak",
-          "Perlis",
-          "Pulau Pinang",
-          "Sabah",
-          "Sarawak",
-          "Selangor",
-          "Terengganu",
-          "W.P. Kuala Lumpur",
-          "W.P. Labuan",
-          "W.P. Putrajaya"
-        ],
-        "range": [
-          "#1f77b4",
-          "#ff7f0e",
-          "#2ca02c",
-          "#d62728",
-          "#9467bd",
-          "#8c564b",
-          "#e377c2",
-          "#7f7f7f",
-          "#bcbd22",
-          "#17becf",
-          "#aec7e8",
-          "#e41a1c",
-          "#4daf4a",
-          "#984ea3",
-          "#ff9896",
-          "#f781bf"
+    {
+      "data": {
+        "values": [
+          {
+            "rank": 6.5,
+            "population_million": 0
+          },
+          {
+            "rank": 6.5,
+            "population_million": 1.25
+          }
         ]
       },
-      "legend": null
-    },
-    "tooltip": [
-      {
-        "field": "rank",
-        "type": "ordinal",
-        "title": "Rank"
+      "mark": {
+        "type": "line",
+        "strokeDash": [4, 4],
+        "strokeWidth": 1,
+        "color": "#555555"
       },
-      {
-        "field": "district",
-        "type": "nominal",
-        "title": "District"
-      },
-      {
-        "field": "state",
-        "type": "nominal",
-        "title": "State"
-      },
-      {
-        "field": "population",
-        "type": "quantitative",
-        "title": "Population",
-        "format": ","
+      "encoding": {
+        "x": {
+          "field": "rank",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "population_million",
+          "type": "quantitative"
+        }
       }
-    ]
-  },
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 75,
+        "opacity": 0.9,
+        "tooltip": true
+      },
+      "encoding": {
+        "x": {
+          "field": "rank",
+          "type": "quantitative",
+          "title": "Population rank",
+          "scale": {
+            "domain": [1, 25]
+          },
+          "axis": {
+            "tickMinStep": 1
+          }
+        },
+        "y": {
+          "field": "population_million",
+          "type": "quantitative",
+          "title": "Population (millions)",
+          "scale": {
+            "domain": [0, 2.6]
+          }
+        },
+        "color": {
+          "field": "district_group",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Klang Valley corridor", "Other districts"],
+            "range": ["#2B6CB0", "#A8B8C8"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "bottom"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "rank",
+            "type": "ordinal",
+            "title": "Rank"
+          },
+          {
+            "field": "district",
+            "type": "nominal",
+            "title": "District"
+          },
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "population_million",
+            "type": "quantitative",
+            "title": "Population (millions)",
+            "format": ".2f"
+          },
+          {
+            "field": "district_group",
+            "type": "nominal",
+            "title": "Group"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.rank <= 4"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 7,
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "x": {
+          "field": "rank",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "population_million",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "district",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "rank": 7,
+            "population_million": 1.3,
+            "label": "After rank 6, districts fall below about 1.2M people"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "x": {
+          "field": "rank",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "population_million",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "grid": true,
+      "gridOpacity": 0.25
+    },
+    "title": {
+      "fontSize": 14,
+      "subtitleFontSize": 10,
+      "anchor": "start"
     }
   }
 }

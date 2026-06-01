@@ -2,7 +2,11 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 350,
   "height": 300,
-  "title": "Top 25 Most Populated Districts in Malaysia",
+  "title": {
+    "text": "Population by State in Malaysia",
+    "subtitle": "2024 total population, grouped from district-level data",
+    "anchor": "start"
+  },
   "data": {
     "url": "data/population_district.csv"
   },
@@ -11,69 +15,223 @@
       "filter": "datum.sex == 'both' && datum.age == 'overall' && datum.ethnicity == 'overall' && datum.date == '2024-01-01'"
     },
     {
-      "window": [
+      "aggregate": [
         {
-          "op": "rank",
-          "as": "rank"
+          "op": "sum",
+          "field": "population",
+          "as": "population_thousand"
         }
       ],
-      "sort": [
+      "groupby": ["state"]
+    },
+    {
+      "calculate": "datum.population_thousand / 1000",
+      "as": "population_million"
+    },
+    {
+      "joinaggregate": [
         {
-          "field": "population",
-          "order": "descending"
+          "op": "sum",
+          "field": "population_million",
+          "as": "national_population_million"
         }
       ]
     },
     {
-      "filter": "datum.rank <= 25"
+      "calculate": "datum.population_million / datum.national_population_million",
+      "as": "population_share"
     }
   ],
-  "mark": {
-    "type": "rect",
-    "tooltip": true
-  },
-  "encoding": {
-    "y": {
-      "field": "district",
-      "type": "nominal",
-      "sort": "-x",
-      "title": "District"
-    },
-    "x": {
-      "field": "state",
-      "type": "nominal",
-      "title": "State"
-    },
-    "color": {
-      "field": "population",
-      "type": "quantitative",
-      "title": "Population",
-      "scale": {
-        "scheme": "blues"
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 3,
+        "tooltip": true
+      },
+      "encoding": {
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Selangor",
+              "Johor",
+              "Sabah",
+              "Perak",
+              "Sarawak",
+              "Kedah",
+              "W.P. Kuala Lumpur",
+              "Kelantan",
+              "Pulau Pinang",
+              "Pahang",
+              "Negeri Sembilan",
+              "Terengganu",
+              "Melaka",
+              "Perlis",
+              "W.P. Putrajaya",
+              "W.P. Labuan"
+            ]
+          },
+          "title": "State",
+          "axis": {
+            "labelLimit": 95
+          }
+        },
+        "x": {
+          "field": "population_million",
+          "type": "quantitative",
+          "title": "Population (millions)",
+          "scale": {
+            "domain": [0, 10.5]
+          }
+        },
+        "color": {
+          "condition": {
+            "test": "datum.state == 'Selangor' || datum.state == 'W.P. Kuala Lumpur' || datum.state == 'W.P. Putrajaya'",
+            "value": "#2B6CB0"
+          },
+          "value": "#A8B8C8",
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "population_million",
+            "type": "quantitative",
+            "title": "Population (millions)",
+            "format": ".2f"
+          },
+          {
+            "field": "population_share",
+            "type": "quantitative",
+            "title": "National share",
+            "format": ".1%"
+          }
+        ]
       }
     },
-    "tooltip": [
-      {
-        "field": "state",
-        "type": "nominal",
-        "title": "State"
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 5,
+        "fontSize": 10,
+        "color": "#111111"
       },
-      {
-        "field": "district",
-        "type": "nominal",
-        "title": "District"
-      },
-      {
-        "field": "population",
-        "type": "quantitative",
-        "title": "Population",
-        "format": ","
+      "encoding": {
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Selangor",
+              "Johor",
+              "Sabah",
+              "Perak",
+              "Sarawak",
+              "Kedah",
+              "W.P. Kuala Lumpur",
+              "Kelantan",
+              "Pulau Pinang",
+              "Pahang",
+              "Negeri Sembilan",
+              "Terengganu",
+              "Melaka",
+              "Perlis",
+              "W.P. Putrajaya",
+              "W.P. Labuan"
+            ]
+          }
+        },
+        "x": {
+          "field": "population_million",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "population_million",
+          "type": "quantitative",
+          "format": ".2f"
+        }
       }
-    ]
-  },
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "state": "Sarawak",
+            "x": 5.15,
+            "label": "← Top 5 states ≈ 60%"
+          },
+          {
+            "state": "W.P. Kuala Lumpur",
+            "x": 3.05,
+            "label": "← Klang Valley ≈ 28%"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#111111"
+      },
+      "encoding": {
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Selangor",
+              "Johor",
+              "Sabah",
+              "Perak",
+              "Sarawak",
+              "Kedah",
+              "W.P. Kuala Lumpur",
+              "Kelantan",
+              "Pulau Pinang",
+              "Pahang",
+              "Negeri Sembilan",
+              "Terengganu",
+              "Melaka",
+              "Perlis",
+              "W.P. Putrajaya",
+              "W.P. Labuan"
+            ]
+          }
+        },
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
   "config": {
     "view": {
       "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "grid": false
+    },
+    "title": {
+      "fontSize": 14,
+      "subtitleFontSize": 10,
+      "anchor": "start"
     }
   }
 }
