@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 520,
   "height": 340,
-  "title": {
-    "text": "Transfer Penalty on Travel Time",
-    "subtitle": "Median and interquartile range of travel time by journey type",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/fare_time_route_long.csv",
     "format": {

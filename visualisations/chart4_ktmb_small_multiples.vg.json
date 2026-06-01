@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 520,
   "height": 330,
-  "title": {
-    "text": "KTMB Ridership Spread by Service",
-    "subtitle": "Median and interquartile range of daily ridership",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/ridership_ktmb_daily.csv",
     "format": {

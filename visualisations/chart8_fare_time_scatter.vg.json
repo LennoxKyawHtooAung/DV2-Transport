@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 520,
   "height": 340,
-  "title": {
-    "text": "Fare and Travel Time by RapidKL Journey",
-    "subtitle": "Station-pair fares compared with estimated travel time",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/fare_time_route_long.csv",
     "format": {

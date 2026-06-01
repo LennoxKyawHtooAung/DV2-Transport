@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 1000,
   "height": 620,
-  "title": {
-    "text": "Cyberjaya Bus Stop Locations and POI Access",
-    "subtitle": "Bus stops plotted over a wider OpenStreetMap road basemap",
-    "anchor": "start"
-  },
   "projection": {
     "type": "mercator",
     "center": [101.643, 2.932],

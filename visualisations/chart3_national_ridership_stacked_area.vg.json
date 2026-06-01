@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 1180,
   "height": 390,
-  "title": {
-    "text": "National Ridership Trends by Transport Mode",
-    "subtitle": "Monthly average daily ridership grouped from service-level data",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/ridership_headline.csv",
     "format": {

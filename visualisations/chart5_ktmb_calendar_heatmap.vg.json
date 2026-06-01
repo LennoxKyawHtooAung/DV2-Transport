@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 430,
   "height": 285,
-  "title": {
-    "text": "KTMB Monthly Ridership Pattern",
-    "subtitle": "Monthly average compared with each service's yearly average",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/ridership_ktmb_daily.csv",
     "format": {

@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 350,
   "height": 300,
-  "title": {
-    "text": "District Population Rank-Size Plot",
-    "subtitle": "Top 25 Malaysian districts by 2024 population",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/population_district.csv"
   },

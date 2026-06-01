@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 350,
   "height": 300,
-  "title": {
-    "text": "Population by State in Malaysia",
-    "subtitle": "2024 total population, grouped from district-level data",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/population_district.csv"
   },

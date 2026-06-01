@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>DV2: Transport in Malaysia</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapping Malaysia’s Public Transport Demand and Access</title>
   <link rel="stylesheet" href="css/style.css">
 
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
@@ -10,248 +12,203 @@
 </head>
 
 <body>
-
   <div class="page">
 
     <header class="dashboard-header">
-      <h1>Malaysia Public Transport: Demand, Movement, Last-Mile Gaps</h1>
-
-      <p class="subtitle">
-        An interactive visualisation of population concentration, public transport ridership,
-        and local access infrastructure.
-      </p>
+      <div class="title-bar">
+        <p class="kicker">FIT2179 Data Visualisation 2</p>
+        <h1>Mapping Malaysia’s Public Transport Demand and Access</h1>
+        <p class="subtitle">
+          Explore how <strong>population concentration</strong> becomes transport demand, how riders move through national and RapidKL networks, and where <strong>cost, transfers, and last-mile access</strong> shape everyday mobility.
+        </p>
+      </div>
     </header>
 
     <!-- Section 1 -->
     <section class="section">
-
       <h2>Where People Gather</h2>
+      <p class="section-intro">
+        Public transport demand begins with the uneven geography of people. This section first identifies where Malaysia’s population is most concentrated, then narrows from the state level to individual districts to reveal which areas are most likely to generate sustained urban mobility pressure.
+      </p>
 
       <div class="three-column-layout">
-
         <div class="chart-card">
-          <h3>Chart 1: Population by State</h3>
-
+          <h3>Population Concentration by State</h3>
           <p>
-            Aggregates district populations to show which states contain the largest
-            population concentration.
+            This establishes the <strong>demand base</strong> for the dashboard. States with larger populations are more likely to require frequent, high-capacity public transport, especially where urban growth concentrates trips into a small number of dense corridors.
           </p>
-
           <div id="chart1" class="chart"></div>
         </div>
 
         <div class="middle-box">
           <h3>Synthesised Insight</h3>
-
           <p>
-            Malaysia’s population is concentrated in a small number of states and major
-            districts rather than being evenly distributed.
+            Malaysia’s transport demand is shaped by <strong>concentrated population centres</strong>, not an even national spread. The state chart gives the broad demand picture, while the district ranking shows whether that demand is driven by many places or by a few dominant urban districts.
           </p>
-
           <p>
-            The state-level bar chart provides the broad demand context, while the
-            ranked district plot shows which local districts contribute most strongly to
-            population concentration.
-          </p>
-
-          <hr>
-
-          <p>
-            <strong>Why this matters:</strong><br>
-            Concentrated population areas are more likely to create strong public
-            transport demand, especially around dense urban corridors such as
-            Selangor, Kuala Lumpur, and Putrajaya.
+            This matters because dense areas such as <strong>Selangor, Kuala Lumpur, and Putrajaya</strong> are more likely to generate repeated everyday trips for work, education, and services.
           </p>
         </div>
 
         <div class="chart-card">
-          <h3>Chart 2: District Population Rank-Size Plot</h3>
-
+          <h3>Largest Districts and the Rank-Size Drop-off</h3>
           <p>
-            Ranking districts by population reveals how sharply population concentration
-            drops after the largest urban districts.
+            The ranking highlights how quickly population size falls after the largest districts. A steep drop-off suggests that transport planning cannot rely only on state totals, because a few districts may carry a disproportionate share of potential ridership demand.
           </p>
-
           <div id="chart2" class="chart"></div>
         </div>
-
       </div>
-
     </section>
 
     <!-- Section 2 -->
     <section class="section">
-
       <h2>From Population to Movement</h2>
-
       <p class="section-intro">
-        Population concentration does not automatically translate into transport usage.
-        Ridership trends reveal how movement changes over time and which services carry demand.
+        Population concentration shows where demand could exist, but ridership reveals where people are actually travelling by public transport. This section shifts from <strong>potential demand</strong> to <strong>observed movement</strong>, comparing national transport modes and then examining how KTMB services vary in typical usage and seasonal patterns.
       </p>
 
       <div class="full-width-card">
-        <h3>Chart 3: National Ridership Trends by Transport Mode</h3>
-
+        <h3>National Ridership Trends by Transport Mode</h3>
         <p>
-          Daily ridership is grouped into broad transport modes to compare national movement trends more clearly.
+          This chart shows how public transport usage changes over time across broad modes. It helps identify whether movement is recovering, growing, or fluctuating, and whether rail and bus services contribute differently to the national ridership pattern.
         </p>
-
         <div id="chart3" class="chart"></div>
       </div>
 
       <div class="two-column-layout">
-
         <div class="chart-card">
-          <h3>Chart 4: KTMB Ridership Distribution by Service</h3>
-
+          <h3>KTMB Ridership Distribution by Service</h3>
           <p>
-            Boxplots compare typical daily ridership and variability across KTMB services without repeating similar time-series panels.
+            The distribution view compares not only which KTMB services carry more riders, but also how stable or inconsistent their daily demand is. Wider spreads indicate services where ridership is more variable, which may reflect weekday–weekend differences, seasonal travel, or uneven service reliance.
           </p>
-
           <div id="chart4" class="chart"></div>
         </div>
 
         <div class="chart-card">
-          <h3>Chart 5: KTMB Monthly Ridership Pattern</h3>
-
+          <h3>KTMB Monthly Ridership Pattern</h3>
           <p>
-            Monthly ridership is normalised against each service's yearly average 
-            to reveal seasonal demand patterns across KTMB services.
+            Normalising each service against its yearly average makes the comparison fairer across services of different sizes. The focus is not just total volume, but whether each service experiences months of unusually high or low demand that may affect planning and resource allocation.
           </p>
-
           <div id="chart5" class="chart"></div>
         </div>
-
       </div>
-
     </section>
 
     <!-- Section 3 -->
     <section class="section">
       <h2>RapidKL Rail Movement Structure</h2>
-
       <p class="section-intro">
-        RapidKL origin-destination data shows where passengers move between stations. The matrix reveals station-pair movement patterns, while the ranked flow plot highlights the busiest passenger corridors.
+        The national view shows broad movement patterns, but RapidKL origin-destination data reveals the internal structure of rail travel within the urban network. This section examines <strong>where passengers start and end their journeys</strong>, separating dense station-pair patterns from the strongest corridor-level flows.
       </p>
 
       <div class="two-column-layout">
-
         <div class="chart-card">
-          <h3>Chart 6: RapidKL Station-Pair Ridership Matrix</h3>
-
+          <h3>RapidKL Station-Pair Ridership Matrix</h3>
           <p>
-            Origin-destination ridership is aggregated by month to reveal high-volume station-pair movement patterns.
+            The matrix makes repeated station-pair demand visible by comparing origins and destinations in the same view. Darker cells point to stronger travel relationships, while the diagonal is treated as non-movement because a station-to-itself pair does not represent an actual passenger corridor.
           </p>
-
           <div id="chart6" class="chart"></div>
         </div>
 
-      <div class="chart-card">
-  <h3>Chart 7: RapidKL Top Passenger Flow Map</h3>
+        <div class="chart-card chart-card--flow">
+          <h3>Busiest RapidKL Passenger Corridors</h3>
+          <p>
+            The flow map turns the strongest station-pair relationships into a spatial story. Thick lines highlight the corridors carrying the most passengers, while colour helps distinguish whether demand stays within the same rail line or crosses between different parts of the RapidKL system.
+          </p>
+          <div id="chart7" class="chart"></div>
 
-  <p>
-    The strongest RapidKL OD corridors are drawn as straight desire lines. Line thickness represents total ridership, while colour identifies the rail line or inter-line corridor type.
-  </p>
-
-<div class="chart-card">
-  <h3>Chart 7: RapidKL Top Passenger Flow Map</h3>
-
-  <div id="chart7" class="chart"></div>
-
-    <div class="flow-width-legend">
-      <div class="flow-width-title">Corridor ridership</div>
-
-      <div class="flow-width-row">
-        <span class="flow-line flow-small"></span>
-        <span>150K</span>
-      </div>
-
-      <div class="flow-width-row">
-        <span class="flow-line flow-medium"></span>
-        <span>300K</span>
-      </div>
-
-      <div class="flow-width-row">
-        <span class="flow-line flow-large"></span>
-        <span>500K</span>
-      </div>
-    </div>
-  </div>
-      </div>
-
+          <div class="flow-width-legend" aria-label="Corridor ridership line-width legend">
+            <div class="flow-width-title">Corridor ridership</div>
+            <div class="flow-width-row">
+              <span class="flow-line flow-small"></span>
+              <span>150K</span>
+            </div>
+            <div class="flow-width-row">
+              <span class="flow-line flow-medium"></span>
+              <span>300K</span>
+            </div>
+            <div class="flow-width-row">
+              <span class="flow-line flow-large"></span>
+              <span>500K</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    
+
     <!-- Section 4 -->
     <section class="section">
-
       <h2>The Cost of Movement</h2>
-
       <p class="section-intro">
-        Passenger movement is not only about ridership. Accessibility also depends on
-        fare, travel time and the number of transfers required to complete a journey.
+        High ridership does not automatically mean a journey is easy. Accessibility is also shaped by the <strong>fare paid</strong>, the <strong>time spent travelling</strong>, and whether passengers must transfer between services. This section connects movement patterns to the practical burden experienced by riders.
       </p>
 
-
       <div class="two-column-layout">
+        <div class="chart-card">
+          <h3>Fare and Travel Time by RapidKL Journey</h3>
+          <p>
+            This comparison shows whether longer trips also tend to cost more, and whether transfer journeys occupy a different part of the fare–time space. It helps reveal journeys that may be less convenient even when they are technically connected by the network.
+          </p>
+          <div id="chart8" class="chart"></div>
+        </div>
 
-          <div class="chart-card">
-
-              <h3>Chart 8: Fare and Travel Time by RapidKL Journey</h3>
-
-              <p>
-                Station-pair fares are compared with estimated travel time, with colour separating direct and transfer journeys.
-              </p>
-
-              <div id="chart8" class="chart"></div>
-
-          </div>
-
-
-          <div class="chart-card">
-
-              <h3>Chart 9: Transfer Penalty on Travel Time</h3>
-
-              <p>
-                Median and interquartile ranges show how transfers increase typical travel time and journey variability.
-              </p>
-
-              <div id="chart9" class="chart"></div>
-
-          </div>
-
+        <div class="chart-card">
+          <h3>Transfer Penalty on Travel Time</h3>
+          <p>
+            Transfers can create a hidden burden beyond the fare itself. By comparing typical travel time and variability, this chart shows whether journeys requiring transfers are consistently longer or less predictable than direct journeys.
+          </p>
+          <div id="chart9" class="chart"></div>
+        </div>
       </div>
-
     </section>
 
     <!-- Section 5 -->
     <section class="section">
-
       <h2>The Last-Mile Question</h2>
-
       <p class="section-intro">
-        Public transport access does not end at major rail corridors. This case study looks at
-        Cyberjaya’s bus stop locations to understand how local access points are distributed.
+        A transport network is only useful if people can reach it from where they live, study, or work. This final section moves from rail corridors to <strong>local access infrastructure</strong>, using Cyberjaya bus stops as a case study for how last-mile coverage supports or limits public transport connectivity.
       </p>
+
       <div class="full-width-card">
-        <h3>Chart 10: Cyberjaya Bus Stop Locations and POI Access</h3>
-
+        <h3>Cyberjaya Bus Stop Locations and POI Access</h3>
         <p>
-          Bus stop coordinates are plotted over a wider Cyberjaya road basemap. Colour separates stops with a listed nearby point of interest from stops without a listed POI.
+          The map shows whether bus stops are positioned near identifiable points of interest or spread across less clearly connected areas. This helps evaluate whether local stops are likely to support meaningful access to daily destinations, rather than simply existing as isolated points on the road network.
         </p>
-
         <div id="chart10" class="chart"></div>
 
         <p class="source-note">
           Basemap roads: © OpenStreetMap contributors, extracted using Overpass Turbo.
         </p>
       </div>
-
     </section>
+
+    <footer class="dashboard-footer">
+      <div>
+        <h2>References and Data Sources</h2>
+        <p class="footer-note">
+          The dashboard combines official Malaysian open data with supporting transport datasets to connect population context, observed ridership, journey characteristics, and local access infrastructure.
+        </p>
+        <ol class="source-list">
+          <li><a href="https://data.gov.my/data-catalogue/ridership_headline" target="_blank" rel="noopener noreferrer">Malaysia public transport ridership headline data</a></li>
+          <li><a href="https://data.gov.my/data-catalogue/ridership_od_rapidrail_daily" target="_blank" rel="noopener noreferrer">RapidKL origin-destination daily ridership data</a></li>
+          <li><a href="https://open.dosm.gov.my/data-catalogue/population_district" target="_blank" rel="noopener noreferrer">Malaysia district population data</a></li>
+          <li><a href="https://data.gov.my/data-catalogue/ridership_ktmb_daily?visual=table" target="_blank" rel="noopener noreferrer">KTMB daily ridership data</a></li>
+          <li><a href="https://www.kaggle.com/datasets/niknmarjan/myrapidkl-train-dataset" target="_blank" rel="noopener noreferrer">MyRapidKL train fare, time, and route dataset</a></li>
+          <li><a href="https://www.kaggle.com/datasets/shahmirvarqha/transportation-in-cyberjaya-malaysia" target="_blank" rel="noopener noreferrer">Transportation in Cyberjaya, Malaysia dataset</a></li>
+          <li><a href="https://www.kaggle.com/datasets/izzulqhaleeqfaris/daily-public-transport-ridership-in-malaysia" target="_blank" rel="noopener noreferrer">Daily public transport ridership in Malaysia dataset</a></li>
+        </ol>
+        <p>
+          Basemap roads: © OpenStreetMap contributors, extracted using Overpass Turbo.
+        </p>
+      </div>
+      <div class="footer-author">
+        <p><strong>Author:</strong> Lennox Kyaw Htoo Aung</p>
+        <p><strong>Student ID:</strong> 35578033</p>
+      </div>
+    </footer>
 
   </div>
 
   <script src="js/main.js"></script>
-
 </body>
 </html>

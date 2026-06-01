@@ -2,13 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 540,
   "height": 430,
-  "title": {
-    "text": "",
-    "subtitle": "Top 8 merged corridors, Jan-May 2026",
-    "anchor": "start",
-    "subtitleFontSize": 10,
-    "offset": 8
-  },
   "projection": {
     "type": "mercator",
     "center": [101.705, 3.17],

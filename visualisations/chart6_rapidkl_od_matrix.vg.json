@@ -2,11 +2,6 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 520,
   "height": 410,
-  "title": {
-    "text": "RapidKL Station-Pair Ridership Matrix",
-    "subtitle": "Top 15 stations by OD ridership, filtered by month",
-    "anchor": "start"
-  },
   "data": {
     "url": "data/rapidkl_od_matrix_top15.csv",
     "format": {
@@ -39,6 +34,14 @@
   "transform": [
     {
       "filter": "datum.month == MonthSelection"
+    },
+    {
+      "calculate": "datum.origin == datum.destination || datum.origin_label == datum.destination_label",
+      "as": "is_same_station"
+    },
+    {
+      "calculate": "datum.is_same_station ? 'Same-station pair hidden from movement analysis' : 'Station-to-station passenger movement'",
+      "as": "cell_type"
     }
   ],
   "mark": {
@@ -77,6 +80,10 @@
       }
     },
     "color": {
+      "condition": {
+        "test": "datum.is_same_station",
+        "value": "#ffffff"
+      },
       "field": "ridership",
       "type": "quantitative",
       "title": "Monthly ridership",
@@ -126,6 +133,11 @@
         "title": "Flow type"
       },
       {
+        "field": "cell_type",
+        "type": "nominal",
+        "title": "Matrix cell type"
+      },
+      {
         "field": "ridership",
         "type": "quantitative",
         "title": "Monthly ridership",
@@ -145,11 +157,6 @@
     "legend": {
       "labelFontSize": 10,
       "titleFontSize": 10
-    },
-    "title": {
-      "fontSize": 14,
-      "subtitleFontSize": 10,
-      "anchor": "start"
     }
   }
 }
