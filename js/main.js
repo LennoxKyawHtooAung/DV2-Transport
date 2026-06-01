@@ -18,6 +18,14 @@ vegaEmbed("#chart5", "visualisations/chart5_ktmb_calendar_heatmap.vg.json", {
     actions: false
 }).catch(console.error);
 
+vegaEmbed("#chart6", "visualisations/chart6_rapidkl_od_matrix.vg.json", {
+    actions: false
+}).catch(console.error);
+
+vegaEmbed("#chart7", "visualisations/chart7_rapidkl_flow_map.vg.json?v=16", {
+    actions: false
+}).catch(console.error);
+
 vegaEmbed(
 "#chart8",
 "visualisations/chart8_fare_time_scatter.vg.json",

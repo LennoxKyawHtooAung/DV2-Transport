@@ -1,0 +1,9 @@
+station_a,station_b,route_group,ridership,ridership_k,corridor,origin_lon,origin_lat,dest_lon,dest_lat,mid_lon,mid_lat
+Ampang Park,KLCC,Kelana Jaya Line,589672,589.672,Ampang Park ↔ KLCC,101.719,3.1595,101.7131,3.1597,101.71605,3.1596
+Bukit Bintang,Maluri,Kajang Line,532398,532.398,Bukit Bintang ↔ Maluri,101.7118,3.146,101.7275,3.1233,101.71965,3.1346499999999997
+Bukit Bintang,Tun Razak Exchange,Kajang Line,529543,529.543,Bukit Bintang ↔ Tun Razak Exchange,101.7118,3.146,101.7185,3.1424,101.71515,3.1441999999999997
+Ampang Park,Wangsa Maju,Kelana Jaya Line,443285,443.285,Ampang Park ↔ Wangsa Maju,101.719,3.1595,101.7376,3.2058,101.72829999999999,3.1826499999999998
+KL Sentral,KLCC,Kelana Jaya Line,432742,432.742,KL Sentral ↔ KLCC,101.6869,3.134,101.7131,3.1597,101.69999999999999,3.1468499999999997
+Bank Rakyat Bangsar,KL Sentral,Kelana Jaya Line,418252,418.252,Bank Rakyat Bangsar ↔ KL Sentral,101.6788,3.1278,101.6869,3.134,101.68285,3.1309
+Abdullah Hukum,KL Sentral,Kelana Jaya Line,381310,381.31,Abdullah Hukum ↔ KL Sentral,101.6735,3.1186,101.6869,3.134,101.6802,3.1262999999999996
+Bukit Bintang,KL Sentral,Monorail,372471,372.471,Bukit Bintang ↔ KL Sentral,101.7118,3.146,101.6869,3.134,101.69935,3.1399999999999997

@@ -1,0 +1,21 @@
+origin,destination,origin_label,destination_label,origin_line_code,destination_line_code,origin_line,destination_line,flow_type,od_pair_short,ridership,rank,ridership_k,ridership_label
+KJ10: KLCC,KJ09: Ampang Park,KLCC,Ampang Park,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,KLCC → Ampang Park,317113,1,317.113,317K
+KG20: Tun Razak Exchange,KG18: Bukit Bintang,Tun Razak Exchange,Bukit Bintang,KG,KG,MRT Kajang,MRT Kajang,Same line,Tun Razak Exchange → Bukit Bintang,276337,2,276.337,276K
+KJ09: Ampang Park,KJ10: KLCC,Ampang Park,KLCC,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,Ampang Park → KLCC,272559,3,272.559,273K
+KG18: Bukit Bintang,KG22: Maluri,Bukit Bintang,Maluri,KG,KG,MRT Kajang,MRT Kajang,Same line,Bukit Bintang → Maluri,267297,4,267.297,267K
+KG22: Maluri,KG18: Bukit Bintang,Maluri,Bukit Bintang,KG,KG,MRT Kajang,MRT Kajang,Same line,Maluri → Bukit Bintang,265101,5,265.101,265K
+KG18: Bukit Bintang,KG20: Tun Razak Exchange,Bukit Bintang,Tun Razak Exchange,KG,KG,MRT Kajang,MRT Kajang,Same line,Bukit Bintang → Tun Razak Exchange,253206,6,253.206,253K
+KJ09: Ampang Park,KJ03: Wangsa Maju,Ampang Park,Wangsa Maju,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,Ampang Park → Wangsa Maju,234356,7,234.356,234K
+KJ15: KL Sentral,KJ10: KLCC,KL Sentral,KLCC,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,KL Sentral → KLCC,224492,8,224.492,224K
+KJ15: KL Sentral,KJ16: Bank Rakyat Bangsar,KL Sentral,Bank Rakyat Bangsar,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,KL Sentral → Bank Rakyat Bangsar,211471,9,211.471,211K
+KJ03: Wangsa Maju,KJ09: Ampang Park,Wangsa Maju,Ampang Park,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,Wangsa Maju → Ampang Park,208929,10,208.929,209K
+KJ10: KLCC,KJ15: KL Sentral,KLCC,KL Sentral,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,KLCC → KL Sentral,208250,11,208.25,208K
+KJ16: Bank Rakyat Bangsar,KJ15: KL Sentral,Bank Rakyat Bangsar,KL Sentral,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,Bank Rakyat Bangsar → KL Sentral,206781,12,206.781,207K
+MR01: KL Sentral,MR06: Bukit Bintang,KL Sentral,Bukit Bintang,MR,MR,Monorail,Monorail,Same line,KL Sentral → Bukit Bintang,197775,13,197.775,198K
+KJ17: Abdullah Hukum,KJ15: KL Sentral,Abdullah Hukum,KL Sentral,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,Abdullah Hukum → KL Sentral,193886,14,193.886,194K
+KJ15: KL Sentral,KJ17: Abdullah Hukum,KL Sentral,Abdullah Hukum,KJ,KJ,Kelana Jaya,Kelana Jaya,Same line,KL Sentral → Abdullah Hukum,187424,15,187.424,187K
+KG18: Bukit Bintang,KG21: Cochrane,Bukit Bintang,Cochrane,KG,KG,MRT Kajang,MRT Kajang,Same line,Bukit Bintang → Cochrane,185001,16,185.001,185K
+MR08: Bukit Nanas,MR06: Bukit Bintang,Bukit Nanas,Bukit Bintang,MR,MR,Monorail,Monorail,Same line,Bukit Nanas → Bukit Bintang,178963,17,178.963,179K
+MR06: Bukit Bintang,MR01: KL Sentral,Bukit Bintang,KL Sentral,MR,MR,Monorail,Monorail,Same line,Bukit Bintang → KL Sentral,174696,18,174.696,175K
+KG20: Tun Razak Exchange,KG22: Maluri,Tun Razak Exchange,Maluri,KG,KG,MRT Kajang,MRT Kajang,Same line,Tun Razak Exchange → Maluri,171356,19,171.356,171K
+KG21: Cochrane,KG18: Bukit Bintang,Cochrane,Bukit Bintang,KG,KG,MRT Kajang,MRT Kajang,Same line,Cochrane → Bukit Bintang,168594,20,168.594,169K

@@ -1,0 +1,646 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-06-01T13:12:30Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/243306384",
+        "air_conditioning": "no",
+        "alt_name": "KTM Kepong Sentral",
+        "internet_access": "yes",
+        "name": "KA07 Kepong Sentral",
+        "name:en": "Kepong Sentral",
+        "name:ja": "クロルデコン",
+        "name:ms": "Kepong Sentral",
+        "name:zh": "甲洞中央",
+        "name:zh-Hans": "甲洞中央",
+        "name:zh-Hant": "甲洞中央",
+        "not:brand:wikidata": "Q215657",
+        "operator": "KTM",
+        "public_transport": "station",
+        "railway": "station",
+        "ref": "KA07",
+        "station": "train",
+        "train": "yes",
+        "wheelchair": "yes",
+        "wikidata": "Q6131785",
+        "wikipedia": "en:Kepong Sentral Komuter station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6285344,
+          3.2087148
+        ]
+      },
+      "id": "node/243306384"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1485787800",
+        "air_conditioning": "no",
+        "alt_name": "KTM UKM",
+        "full_name": "UKM Komuter Station",
+        "internet_access": "yes",
+        "name": "KB07 UKM",
+        "name:en": "UKM",
+        "name:ja": "UKM",
+        "name:ms": "UKM",
+        "name:zh": "马来西亚国立大学",
+        "name:zh-Hans": "马来西亚国立大学",
+        "name:zh-Hant": "馬來西亞國立大學",
+        "network": "KTM Komuter",
+        "network:wikidata": "Q4383987",
+        "not:brand:wikidata": "Q215657",
+        "operator": "Keretapi Tanah Melayu",
+        "operator:wikidata": "Q1187590",
+        "public_transport": "station",
+        "railway": "station",
+        "ref": "KB07",
+        "station": "train",
+        "train": "yes",
+        "website": "https://mrt.com.my/komuter/UKM.htm",
+        "wheelchair": "yes",
+        "wikidata": "Q6131646",
+        "wikipedia": "en:UKM Komuter station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7877867,
+          2.9395784
+        ]
+      },
+      "id": "node/1485787800"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1993254005",
+        "amenity": "bus_station",
+        "bus": "yes",
+        "level": "-1",
+        "name": "KL Sentral",
+        "name:en": "KL Sentral",
+        "name:ms": "KL Sentral",
+        "name:zh": "吉隆坡中央车站",
+        "name:zh-Hans": "吉隆坡中央车站",
+        "name:zh-Hant": "吉隆坡中央車站",
+        "operator": "Skybus;Aerobus",
+        "public_transport": "station",
+        "ref": "to KLIA, LCCT, Genting, Penang"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6868577,
+          3.133679
+        ]
+      },
+      "id": "node/1993254005"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2573301359",
+        "air_conditioning": "no",
+        "alt_name": "KTM Seputeh",
+        "name": "KB02 Seputeh",
+        "name:en": "Seputeh",
+        "name:ja": "スプテ",
+        "name:ms": "Seputeh",
+        "name:zh": "士布爹",
+        "name:zh-Hans": "士布爹",
+        "name:zh-Hant": "士布爹",
+        "not:brand:wikidata": "Q215657",
+        "operator": "KTM",
+        "public_transport": "station",
+        "railway": "station",
+        "ref": "KB02",
+        "station": "train",
+        "train": "yes",
+        "wheelchair": "yes",
+        "wikidata": "Q6124851",
+        "wikipedia": "en:Seputeh Komuter station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.68142,
+          3.1136874
+        ]
+      },
+      "id": "node/2573301359"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2576906197",
+        "light_rail": "yes",
+        "name": "Masjid Jamek (AG SP)",
+        "name:en": "Masjid Jamek (AG SP)",
+        "name:ja": "マスジット・ジャメ",
+        "name:ms": "Masjid Jamek",
+        "name:ms-Arab": "مسجد جامع (لالوان امڤاڠ)",
+        "name:ta": "ஜமேக் மசூதி",
+        "name:zh": "占美清真寺",
+        "name:zh-Hans": "占美清真寺",
+        "name:zh-Hant": "占美清真寺",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "AG7;SP7",
+        "station": "light_rail",
+        "wikidata": "Q1055044",
+        "wikipedia": "en:Masjid Jamek LRT station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6964028,
+          3.1494677
+        ]
+      },
+      "id": "node/2576906197"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2677292823",
+        "alt_name": "MYDIN Sinar Kota;MYDIN Kotaraya",
+        "amenity": "bus_station",
+        "bench": "no",
+        "bus": "yes",
+        "name": "Hab Lebuh Pudu (TP)",
+        "name:ms": "Hab Lebuh Pudu (TP)",
+        "network": "Rapid KL Bus",
+        "operator": "Rapid Bus;MARA Liner",
+        "public_transport": "station",
+        "ref": "KL113",
+        "route_ref": "150;151;450;590;851;BET5;BET6",
+        "shelter": "yes",
+        "wheelchair": "limited"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6986534,
+          3.1467318
+        ]
+      },
+      "id": "node/2677292823"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4036400202",
+        "light_rail": "yes",
+        "name": "Chan Sow Lin",
+        "name:en": "Chan Sow Lin",
+        "name:ms": "Chan Sow Lin",
+        "name:ms-Arab": "چن ساو لين",
+        "name:zh": "陈秀连",
+        "name:zh-Hans": "陈秀连",
+        "name:zh-Hant": "陳秀連",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "AG11;SP11",
+        "station": "light_rail"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7156571,
+          3.1277484
+        ]
+      },
+      "id": "node/4036400202"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5391767170",
+        "air_conditioning": "yes",
+        "light_rail": "yes",
+        "name": "KJ15 KL Sentral",
+        "name:en": "KL Sentral",
+        "name:ms": "KL Sentral",
+        "name:th": "เคแอลเซ็นทรัล",
+        "name:zh": "吉隆坡中央",
+        "name:zh-Hans": "吉隆坡中央",
+        "name:zh-Hant": "吉隆坡中央",
+        "public_transport": "station",
+        "railway": "station",
+        "station": "light_rail",
+        "wheelchair": "yes",
+        "wikidata": "Q801042",
+        "wikipedia": "en:Kuala Lumpur Sentral station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6865153,
+          3.1341106
+        ]
+      },
+      "id": "node/5391767170"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5391966854",
+        "air_conditioning": "yes",
+        "full_name": "KLCC LRT Station",
+        "layer": "-1",
+        "level": "-1",
+        "light_rail": "yes",
+        "name": "KJ10 KLCC",
+        "name:en": "KLCC",
+        "name:ja": "KLCC",
+        "name:ms": "KLCC",
+        "name:ta": "கலகக்",
+        "name:zh": "城中城",
+        "name:zh-Hans": "城中城",
+        "name:zh-Hant": "城中城",
+        "network": "Kelana Jaya Line",
+        "operator": "Rapid KL",
+        "public_transport": "station",
+        "railway": "station",
+        "ref": "KJ10",
+        "station": "light_rail",
+        "subway": "yes",
+        "website": "https://mrt.com.my/lrt_kelana/KLCC.htm",
+        "wheelchair": "yes",
+        "wikidata": "Q1054307",
+        "wikipedia": "en:KLCC LRT station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7133662,
+          3.1592469
+        ]
+      },
+      "id": "node/5391966854"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/5754126449",
+        "amenity": "bus_station",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "departures_board": "realtime",
+        "name": "Hub Seksyen 2",
+        "network": "Rapid KL Bus;LRT Feeder Bus;Smart Selangor Bus",
+        "operator": "Rapid Bus",
+        "public_transport": "station",
+        "ref": "SA14",
+        "route_ref": "708;750;753;T754;SA01",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.5076657,
+          3.0718953
+        ]
+      },
+      "id": "node/5754126449"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6502502981",
+        "light_rail": "yes",
+        "name": "AG7 SP7 KJ13 Masjid Jamek",
+        "name:en": "Masjid Jamek",
+        "name:ms": "Masjid Jamek",
+        "name:zh": "占美清真寺",
+        "name:zh-Hans": "占美清真寺",
+        "name:zh-Hant": "占美清真寺",
+        "operator": "Rapid KL",
+        "public_transport": "station",
+        "railway": "station",
+        "station": "light_rail",
+        "wikidata": "Q1055044",
+        "wikipedia": "en:Masjid Jamek LRT station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.696461,
+          3.1494076
+        ]
+      },
+      "id": "node/6502502981"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9867631716",
+        "light_rail": "yes",
+        "name": "Chan Sow Lin",
+        "name:en": "Chan Sow Lin",
+        "name:ms": "Chan Sow Lin",
+        "name:ms-Arab": "چن ساو لين",
+        "name:zh": "陈秀连",
+        "name:zh-Hans": "陈秀连",
+        "name:zh-Hant": "陳秀連",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "AG11;SP11",
+        "station": "light_rail"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7154716,
+          3.1277686
+        ]
+      },
+      "id": "node/9867631716"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9867635517",
+        "light_rail": "yes",
+        "name": "Chan Sow Lin",
+        "name:en": "Chan Sow Lin",
+        "name:ms": "Chan Sow Lin",
+        "name:ms-Arab": "چن ساو لين",
+        "name:zh": "陈秀连",
+        "name:zh-Hans": "陈秀连",
+        "name:zh-Hant": "陳秀連",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "AG11;SP11",
+        "station": "light_rail"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7155705,
+          3.1277571
+        ]
+      },
+      "id": "node/9867635517"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/9867635521",
+        "light_rail": "yes",
+        "name": "Masjid Jamek (AG SP)",
+        "name:en": "Masjid Jamek (AG SP)",
+        "name:ja": "マスジット・ジャメ",
+        "name:ms": "Masjid Jamek",
+        "name:ms-Arab": "مسجد جامع (لالوان امڤاڠ)",
+        "name:ta": "ஜமேக் மசூதி",
+        "name:zh": "占美清真寺",
+        "name:zh-Hans": "占美清真寺",
+        "name:zh-Hant": "占美清真寺",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "AG7;SP7",
+        "station": "light_rail",
+        "wikidata": "Q1055044",
+        "wikipedia": "en:Masjid Jamek LRT station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6963912,
+          3.1494545
+        ]
+      },
+      "id": "node/9867635521"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10588065121",
+        "amenity": "bus_station",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "name": "Hab Lebuh Pudu (LP)",
+        "name:ms": "Hab Lebuh Pudu (LP)",
+        "operator": "KR Travel & Tours;Selangor Omnibus",
+        "public_transport": "station",
+        "ref": "KL1565",
+        "route_ref": "T523;100;103;104;107;120",
+        "shelter": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6980609,
+          3.1470718
+        ]
+      },
+      "id": "node/10588065121"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10594592099",
+        "amenity": "bus_station",
+        "bench": "yes",
+        "bin": "yes",
+        "bus": "yes",
+        "name": "Hab Lebuh Pudu (TSS)",
+        "operator": "Rapid KL",
+        "public_transport": "station",
+        "ref": "KL101",
+        "route_ref": "400;450;580;590",
+        "route_ref:rapidkl": "U4500;U4000;U5800;U5900",
+        "shelter": "yes",
+        "source": "data.gov.my"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6983168,
+          3.1463117
+        ]
+      },
+      "id": "node/10594592099"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10594607912",
+        "amenity": "bus_station",
+        "bus": "yes",
+        "destination": "Teluk Intan;Tanjong Malim;Seremban",
+        "level": "-1",
+        "name": "Pudu Sentral",
+        "name:en": "Pudu Sentral",
+        "name:ms": "Pudu Sentral",
+        "name:zh": "富都中环",
+        "name:zh-Hans": "富都中环",
+        "name:zh-Hant": "富都中環",
+        "operator": "TM-KL;StarMart;Suasana Edaran;SPT",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7009751,
+          3.145553
+        ]
+      },
+      "id": "node/10594607912"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11535346374",
+        "amenity": "bus_station",
+        "bus": "yes",
+        "name": "Hentian Ukay Perdana",
+        "name:ms": "Hentian Ukay Perdana",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.7781033,
+          3.2121186
+        ]
+      },
+      "id": "node/11535346374"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/11880176069",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "name": "Watertaxi - Taman Botani (01)",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6926966,
+          2.9440742
+        ]
+      },
+      "id": "node/11880176069"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12459103364",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "name": "Watertaxi - Cruise Tasik (03)",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6903059,
+          2.9336099
+        ]
+      },
+      "id": "node/12459103364"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12459119150",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "name": "Watertaxi - Zenith Hotel (04)",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6868307,
+          2.9301438
+        ]
+      },
+      "id": "node/12459119150"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12459144759",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "name": "Watertaxi - Anjung Floria (07)",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6773869,
+          2.9130559
+        ]
+      },
+      "id": "node/12459144759"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12514145465",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "name": "Watertaxi - Jakim (06)",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6803971,
+          2.9179339
+        ]
+      },
+      "id": "node/12514145465"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12514145474",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6824785,
+          2.9227186
+        ]
+      },
+      "id": "node/12514145474"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/12514238378",
+        "amenity": "ferry_terminal",
+        "ferry": "yes",
+        "name": "Watertaxi - Kelab Tasik (02)",
+        "public_transport": "station"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.6885719,
+          2.9405214
+        ]
+      },
+      "id": "node/12514238378"
+    }
+  ]
+}

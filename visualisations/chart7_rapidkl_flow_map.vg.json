@@ -1,0 +1,279 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 540,
+  "height": 430,
+  "title": {
+    "text": "",
+    "subtitle": "Top 8 merged corridors, Jan-May 2026",
+    "anchor": "start",
+    "subtitleFontSize": 10,
+    "offset": 8
+  },
+  "projection": {
+    "type": "mercator",
+    "center": [101.705, 3.17],
+    "scale": 350000
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/rapidkl_rail_basemap.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "filled": false,
+        "stroke": "#D9DEE5",
+        "strokeWidth": 0.8,
+        "opacity": 0.65
+      }
+    },
+    {
+      "data": {
+        "url": "data/rapidkl_flowmap_lines.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "ridership": "number",
+            "ridership_k": "number",
+            "origin_lon": "number",
+            "origin_lat": "number",
+            "dest_lon": "number",
+            "dest_lat": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "calculate": "datum.route_group == 'Unknown' || datum.route_group == 'Kajang / Monorail' ? 'Inter-line' : datum.route_group",
+          "as": "route_display"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "strokeCap": "round",
+        "opacity": 0.72
+      },
+      "encoding": {
+        "longitude": {
+          "field": "origin_lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "origin_lat",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "dest_lon"
+        },
+        "latitude2": {
+          "field": "dest_lat"
+        },
+        "size": {
+          "field": "ridership_k",
+          "type": "quantitative",
+          "scale": {
+            "range": [1.5, 7.5]
+          },
+          "legend": null
+        },
+        "color": {
+          "field": "route_display",
+          "type": "nominal",
+          "title": "Corridor type",
+          "scale": {
+            "domain": [
+              "Kelana Jaya Line",
+              "Kajang Line",
+              "Monorail",
+              "Inter-line"
+            ],
+            "range": [
+              "#2A9D8F",
+              "#8A6BD1",
+              "#E67E80",
+              "#6B6B6B"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "columns": 2,
+            "title": "Corridor type",
+            "symbolType": "stroke"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "corridor",
+            "type": "nominal",
+            "title": "Corridor"
+          },
+          {
+            "field": "route_display",
+            "type": "nominal",
+            "title": "Corridor type"
+          },
+          {
+            "field": "ridership",
+            "type": "quantitative",
+            "title": "Total ridership",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/rapidkl_flowmap_nodes.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "lon": "number",
+            "lat": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "calculate": "datum.station_line == 'Kajang / Monorail' ? 'Interchange' : datum.station_line",
+          "as": "station_line_display"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "filled": true,
+        "size": 62,
+        "stroke": "white",
+        "strokeWidth": 1.2,
+        "opacity": 1
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "station_line_display",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Kelana Jaya Line",
+              "Kajang Line",
+              "Monorail",
+              "Interchange"
+            ],
+            "range": [
+              "#2A9D8F",
+              "#8A6BD1",
+              "#E67E80",
+              "#555555"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "station",
+            "type": "nominal",
+            "title": "Station"
+          },
+          {
+            "field": "station_line",
+            "type": "nominal",
+            "title": "Line"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/rapidkl_flowmap_nodes.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "lon": "number",
+            "lat": "number"
+          }
+        }
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 6,
+        "dy": -6,
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#222222"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "station",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 101.682,
+            "lat": 3.205,
+            "label": "Top corridors converge around central KL interchanges"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#222222"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 10
+    },
+    "title": {
+      "fontSize": 0,
+      "subtitleFontSize": 10,
+      "anchor": "start"
+    }
+  }
+}

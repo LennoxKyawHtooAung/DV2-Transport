@@ -1,0 +1,9 @@
+station_label,matched_name,longitude,latitude,match_score,match_source
+Ampang Park,station,101.6824785,2.9227186,0.92,osm_fuzzy
+Bank Rakyat Bangsar,station,101.6824785,2.9227186,0.92,osm_fuzzy
+Bukit Bintang,station,101.6824785,2.9227186,0.92,osm_fuzzy
+KL Sentral,KL Sentral,101.6868577,3.133679,1.0,osm_fuzzy
+KLCC,KJ10 KLCC,101.7133662,3.1592469,0.92,osm_fuzzy
+Maluri,station,101.6824785,2.9227186,0.92,osm_fuzzy
+Tun Razak Exchange,station,101.6824785,2.9227186,0.92,osm_fuzzy
+Wangsa Maju,station,101.6824785,2.9227186,0.92,osm_fuzzy
